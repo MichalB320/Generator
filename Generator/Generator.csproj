@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\csvObrazok.png" />
+    <None Remove="Assets\ldapObrazok.png" />
+    <None Remove="Assets\next-38-512.png" />
+    <None Remove="Assets\previous-38-512.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\csvObrazok.png" />
+    <Resource Include="Assets\ldapObrazok.png" />
+    <Resource Include="Assets\next-38-512.png" />
+    <Resource Include="Assets\previous-38-512.png" />
+  </ItemGroup>
+
+</Project>

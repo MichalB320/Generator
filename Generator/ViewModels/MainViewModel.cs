@@ -1,0 +1,23 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Generator.Stores;
+
+namespace Generator.ViewModels;
+
+public class MainViewModel : ObservableObject
+{
+    private NavigationStore _navigationStore;
+    public ObservableObject CurrentViewModel => _navigationStore.CurrentViewModel;
+
+    public MainViewModel(NavigationStore navigation)
+    {
+        //CurrentViewModel = new SourcesManagerViewModel(manager);
+        _navigationStore = navigation;
+
+        _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+    }
+
+    private void OnCurrentViewModelChanged()
+    {
+        OnPropertyChanged(nameof(CurrentViewModel));
+    }
+}

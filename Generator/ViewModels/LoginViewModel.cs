@@ -1,5 +1,4 @@
-﻿using ClassLibrary;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using Generator.Stores;
@@ -9,34 +8,34 @@ namespace Generator.ViewModels;
 
 internal class LoginViewModel : ObservableObject
 {
-    public ICommand ConnectComman { get; set; }
-    public ICommand DisconnectCommand { get; set; }
-    public ICommand NextCommand { get; set; }
+    private readonly Login _loginModel;
 
-    private string _domain;
-    public string Domain { get => _domain; set { _domain = value; OnPropertyChanged(nameof(Domain)); } }
+    public ICommand ConnectCommand { get; }
+    public ICommand DisconnectCommand { get; }
+    public ICommand NextCommand { get; }
 
-    private string _userInput;
-    public string UserInput { get => _userInput; set { _userInput = value; OnPropertyChanged(nameof(UserInput)); } }
+    public string Domain { get => _loginModel.Domain; set { _loginModel.Domain = value; OnPropertyChanged(nameof(Domain)); } }
+    public string UserInput { get => _loginModel.UserName; set { _loginModel.UserName = value; OnPropertyChanged(nameof(UserInput)); } }
+    public string Password { private get; set; } = string.Empty;
+    public string Info { get => _loginModel.Info; set { _loginModel.Info = value; OnPropertyChanged(nameof(Info)); } }
 
-    private string _password;
-    public string Password { get => _password; set { _password = value; OnPropertyChanged(nameof(Password)); } }
+    public NavigationBarViewModel NavigationBarViewModel { get; }
 
-    private string _info;
-    public string Info { get => _info; set { _info = value; OnPropertyChanged(nameof(Info)); } }
-
-    public LoginViewModel(NavigationStore navigator, Mystructure mystructure, NavigationBarViewModel navigationBarViewModel)
+    public LoginViewModel(NavigationStore navigator, NavigationBarViewModel navigationBarViewModel, IS iss)
     {
-        _domain = "LDAP://pegasus.fri.uniza.sk";
-        _userInput = "bezo1";
-        _password = "";
-        _info = "Logged out";
+        _loginModel = iss.GetLogin();
 
-        Login lgi = new Login();
+        navigationBarViewModel.Collapsed();
+        NavigationBarViewModel = navigationBarViewModel;
 
-        ConnectComman = new RelayCommand(() => Info = lgi.LogIn(Domain, UserInput, Password));
-        DisconnectCommand = new RelayCommand(() => Info = lgi.LogOut());
-        NextCommand = new RelayCommand(() => navigator.CurrentViewModel = new SourcesManagerViewModel(navigator, mystructure, lgi, navigationBarViewModel));
+        ConnectCommand = new RelayCommand(Connect);
+        DisconnectCommand = new RelayCommand(() => Info = _loginModel.LogOut());
+        NextCommand = new RelayCommand(() => navigator.CurrentViewModel = new SourcesManagerViewModel(navigator,/* mystructure, _loginModel,*/ navigationBarViewModel, iss));
     }
 
+    private async void Connect()
+    {
+        await Task.Run(() => _loginModel.LogIn(Domain, UserInput, Password));
+        Info = _loginModel.Info;
+    }
 }

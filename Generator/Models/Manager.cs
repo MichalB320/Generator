@@ -1,4 +1,6 @@
 ﻿using ClassLibrary;
+using Generator.ViewModels;
+using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
 
@@ -9,9 +11,23 @@ public class Manager
     private Mystructure _struct;
     public Mystructure Structure { get => _struct; }
 
+    private ObservableCollection<ButtonViewModel> _dynamicButtons;
+    public ObservableCollection<ButtonViewModel> DynamicButtons
+    {
+        get => _dynamicButtons;
+        set
+        {
+            if (_dynamicButtons != value)
+            {
+                _dynamicButtons = value;
+            }
+        }
+    }
+
     public Manager(ref Mystructure structure)
     {
         _struct = structure;
+        _dynamicButtons = new ObservableCollection<ButtonViewModel>();
     }
 
     public string WriteLDAP(int index)
@@ -41,7 +57,13 @@ public class Manager
         return sb.ToString();
     }
 
-    public void AddCSV(CSVData csvData) => _struct.Add<CSVData>(csvData);
+    public void AddCSV(CSVData csvData)
+    {
+        _struct.Add<CSVData>(csvData);
+    }
 
-    public void AddSearchResultCollection(SearchResultCollection ldapData) => _struct.Add<SearchResultCollection>(ldapData);
+    public void AddSearchResultCollection(SearchResultCollection ldapData)
+    {
+        _struct.Add<SearchResultCollection>(ldapData);
+    }
 }

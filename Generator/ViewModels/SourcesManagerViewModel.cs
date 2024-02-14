@@ -14,77 +14,48 @@ namespace Generator.ViewModels;
 
 public class SourcesManagerViewModel : ObservableObject
 {
+    private readonly Login _lgi;
+    private readonly Manager _manager;
+
     public ICommand LdapCommand { get; }
     public ICommand CsvCommand { get; }
-    public ICommand ClickCommand { get; set; }
-    public ICommand NextCommand { get; set; }
+    public ICommand ClickCommand { get; }
+    public ICommand NextCommand { get; }
     public ICommand PreviousCommand { get; }
 
     private string _output;
     public string Output { get => _output; set { _output = value; OnPropertyChanged(nameof(Output)); } }
-
-    private int _count;
-    public int Count { get => _count; set { _count = value; OnPropertyChanged(nameof(Count)); } }
-
-    private ObservableCollection<ButtonViewModel> _dynamicButtons;
     public ObservableCollection<ButtonViewModel> DynamicButtons
     {
-        get => _dynamicButtons;
+        get => _manager.DynamicButtons;
         set
         {
-            if (_dynamicButtons != value)
+            if (_manager.DynamicButtons != value)
             {
-                _dynamicButtons = value;
+                _manager.DynamicButtons = value;
                 OnPropertyChanged(nameof(DynamicButtons));
             }
         }
     }
-
-    private double _scrollValue;
-    public double ScrollValue
+    private int _count;
+    public int Count
     {
-        get { return _scrollValue; }
+        get => _count;
         set
         {
-            if (_scrollValue != value)
-            {
-                _scrollValue = value;
-                OnPropertyChanged(nameof(ScrollValue));
-            }
-        }
-    }
-
-    private double _scrollMax;
-    public double ScrollMax
-    {
-        get { return _scrollMax; }
-        set
-        {
-            if (_scrollMax != value)
-            {
-                _scrollMax = value;
-                OnPropertyChanged(nameof(ScrollMax));
-            }
+            _count = value;
+            OnPropertyChanged(nameof(Count));
         }
     }
 
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
-    private Login _lgi;
-    private Manager _manager;
-
-    public SourcesManagerViewModel(/*Manager manager, */NavigationStore navigation, Mystructure structure, Login login, NavigationBarViewModel navigationBarViewModel)
+    public SourcesManagerViewModel(NavigationStore navigation, /*Mystructure structure, Login login,*/ NavigationBarViewModel navigationBarViewModel, IS iss)
     {
-        var manager = new Manager(ref structure);
-        var list = manager.Structure;
-
-        _lgi = login;
-        _manager = manager;
-
-        _count = 0;
+        _lgi = iss.GetLogin();
+        _manager = iss.GetManager();
         _output = "";
-
-        _dynamicButtons = new ObservableCollection<ButtonViewModel>();
+        _count = 0;
 
         LdapCommand = new RelayCommand(OnClickLdapBtn);
         CsvCommand = new RelayCommand(OnClickCsvBtn);
@@ -100,16 +71,17 @@ public class SourcesManagerViewModel : ObservableObject
                     OnClickBtn(parameter.Index);
             }
         });
-        NextCommand = new RelayCommand(() => navigation.CurrentViewModel = new GenerateViewModel(manager.Structure, _dynamicButtons, navigation, navigationBarViewModel, login));
-        PreviousCommand = new RelayCommand(() => navigation.CurrentViewModel = new LoginViewModel(navigation, structure, navigationBarViewModel));
+        NextCommand = new RelayCommand(() => navigation.CurrentViewModel = new GenerateViewModel(_manager.Structure, DynamicButtons, navigation, navigationBarViewModel, iss.GetLogin()/*login*/, iss));
+        PreviousCommand = new RelayCommand(() => navigation.CurrentViewModel = new LoginViewModel(navigation,/*structure*/ navigationBarViewModel, iss));
         NavigationBarViewModel = navigationBarViewModel;
-
+        navigationBarViewModel.Visible();
         Update();
     }
 
     private void Update()
     {
-        _count = _manager.Structure.Count;
+        _count = _manager.DynamicButtons.Count;
+        DynamicButtons = _manager.DynamicButtons;
     }
 
     private void OnClickCsvBtn()
@@ -160,7 +132,7 @@ public class SourcesManagerViewModel : ObservableObject
 
     private void OnClickButton(int index) => Output = _manager.WriteCSV(index);
 
-    private void AddButtonToStack(string content, Type type) => DynamicButtons.Add(new ButtonViewModel(content, ClickCommand, _dynamicButtons.Count, type) /*{ Content = content, Command = ClickCommand, Index = _dynamicButtons.Count, Type = type }*/);
+    private void AddButtonToStack(string content, Type type) => DynamicButtons.Add(new ButtonViewModel(content, ClickCommand, DynamicButtons.Count, type) /*{ Content = content, Command = ClickCommand, Index = _dynamicButtons.Count, Type = type }*/);
 }
 
 public class ButtonViewModel

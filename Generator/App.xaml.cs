@@ -1,4 +1,5 @@
 ﻿using ClassLibrary;
+using Generator.Models;
 using Generator.Stores;
 using Generator.ViewModels;
 using System.Windows;
@@ -10,27 +11,29 @@ namespace Generator;
 /// </summary>
 public partial class App : Application
 {
-    private Mystructure _list;
-    //private Login _lgi;
-    //private Manager _manager;
-    //private Generator.Models.Generator _generator;
-    private NavigationStore _navigationStore;
-    private NavigationBarViewModel _navigationBarViewModel;
+    private readonly Mystructure _list;
+    private readonly IS _is;
+
+    private readonly AccountStore _accountStore;
+
+    private readonly NavigationStore _navigationStore;
+    private readonly NavigationBarViewModel _navigationBarViewModel;
 
     public App()
     {
         _list = new Mystructure();
-        //_lgi = new Login();
-        //_manager = new Manager(ref _list);
+        _is = new IS(_list);
 
+        _accountStore = new AccountStore();
 
         _navigationStore = new NavigationStore();
-        _navigationBarViewModel = new NavigationBarViewModel(_navigationStore);
+        _navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _is);
+        _navigationBarViewModel.IsEmpty = true;
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _list, _navigationBarViewModel);//new SourcesManagerViewModel(_manager, _navigationStore);
+        _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _navigationBarViewModel, _is);//new SourcesManagerViewModel(_manager, _navigationStore);
 
         MainWindow = new MainWindow()
         {

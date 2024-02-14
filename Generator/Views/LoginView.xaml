@@ -48,7 +48,7 @@
 
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Connect" Width="200" Margin="9" Command="{Binding ConnectComman}" Cursor="Hand"/>
+                    <Button Content="Connect" Width="200" Margin="9" Command="{Binding ConnectCommand}" Cursor="Hand"/>
                     <!--<Button Content="Disconnect" Command="{Binding DisconnectCommand}"/>-->
                 </StackPanel>
                 <TextBlock Name="infoLoggedInTextBlock" Grid.Row="2" Text="{Binding Info}"/>
@@ -68,7 +68,7 @@
             </Button>
         </Grid>
 
-        <components:NavigationBar VerticalAlignment="Bottom"/>
+        <components:NavigationBar VerticalAlignment="Bottom" DataContext="{Binding NavigationBarViewModel}"/>
 
     </Grid>
 </UserControl>

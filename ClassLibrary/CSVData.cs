@@ -1,4 +1,6 @@
-﻿namespace ClassLibrary;
+﻿using System.Security.Cryptography;
+
+namespace ClassLibrary;
 
 public class CSVData
 {
@@ -15,6 +17,11 @@ public class CSVData
     public CSVData()
     {
         _rowsCSV = new();
+    }
+
+    public CSVData(List<List<string>> rows)
+    {
+        _rowsCSV = rows;
     }
 
     public void Fill()
@@ -49,6 +56,8 @@ public class CSVData
 
     public void AddRow(List<string> row) => _rowsCSV.Add(row);
 
+    public void AddRows(List<List<string>> rows) => _rowsCSV = rows;
+
     public void RemoveRow(int index) => _rowsCSV.RemoveAt(index);
 
     public List<List<string>> GetRows() => _rowsCSV;
@@ -59,5 +68,20 @@ public class CSVData
             return _rowsCSV[index];
         else
             return null;
+    }
+
+    public List<string> GetRow(string keyName, string key)
+    {
+        int indexCsvStlpca = _rowsCSV[0].IndexOf(keyName);
+
+        foreach (List<string> row in _rowsCSV)
+        {
+            if (row[indexCsvStlpca] == key)
+            {
+                return row;
+            }
+        }
+        
+        return null;
     }
 }

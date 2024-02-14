@@ -4,18 +4,30 @@ namespace Generator.Models;
 
 public class Login
 {
+    public string Domain { get; set; }
+    public string UserName { get; set; }
+    public string Info { get; set; }
+
+
     private DirectoryEntry? _entry;
     private DirectorySearcher? _searcher;
 
     public Login()
     {
-
+        Domain = "";
+        UserName = "";
+        Info = "";
     }
 
-    public string LogIn(string ldapPath, string userName, string password)
+    public Login(string domain, string userName, string info)
     {
-        string info = "";
+        Domain = domain;
+        UserName = userName;
+        Info = info;
+    }
 
+    public void LogIn(string ldapPath, string userName, string password)
+    {
         try
         {
             _entry = new DirectoryEntry(ldapPath, userName, password);
@@ -23,15 +35,13 @@ public class Login
 
             _searcher = new DirectorySearcher(_entry);
 
-            info = "Logged in";
+            Info = "Logged in";
         }
         catch (Exception e)
         {
             Console.WriteLine($"Chyba prihlasenia {e.Message}");
-            info = $"Error: {e.Message}";
+            Info = $"Error: {e.Message}";
         }
-
-        return info;
     }
 
     public SearchResultCollection? Search(string filter)

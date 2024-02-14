@@ -1,5 +1,6 @@
 ﻿using ClassLibrary;
 using Generator.ViewModels;
+using System.CodeDom;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
@@ -50,11 +51,9 @@ public class Generator
                 int endIndex = input.IndexOf('$', startIndex + 1);
                 startIndex1 = input.IndexOf('$', endIndex + 1);
                 string subStr = input.Substring(startIndex + 1, endIndex - 1 - startIndex);
-                //output.Dispatcher.Invoke(() => output.AppendText($"{subStr}{resultEntry.InvokeGet(vars[i])}"));
-                sb.Append($"{subStr}{_pole[i][j]}");//      resultEntry.InvokeGet(vars[i])
+                sb.Append($"{subStr}{_pole[i][j]}");
             }
-            sb.Append("\n");
-            sb.Append("\n");
+            sb.Append("\n\n");
         }
         return sb.ToString();
     }
@@ -149,29 +148,37 @@ public class Generator
         Join();
     }
 
-    public void FindStrings()
+    public async Task FindStrings()
     {
-        int startI = _input.IndexOf('$');
-        int count = _input.Count(c => c == '$');
-
-        for (int i = 0; i < count / 2; i++)
+        await Task.Run(() =>
         {
-            int startIndex = startI;
-            int endIndex = _input.IndexOf('$', startIndex + 1);
-            startI = _input.IndexOf('$', endIndex + 1);
-            string subStr = _input.Substring(startIndex + 1, endIndex - 1 - startIndex);
-            _strings.Add(subStr);
-        }
+
+            int startI = _input.IndexOf('$');
+            int count = _input.Count(c => c == '$');
+
+
+            for (int i = 0; i < count / 2; i++)
+            {
+                int startIndex = startI;
+                int endIndex = _input.IndexOf('$', startIndex + 1);
+                startI = _input.IndexOf('$', endIndex + 1);
+                string subStr = _input.Substring(startIndex + 1, endIndex - 1 - startIndex);
+                _strings.Add(subStr);
+            }
+        });
     }
 
-    public void FindSourcesAndVariables()
+    public async Task FindSourcesAndVariables()
     {
-        foreach (string str in _strings)
+        await Task.Run(() =>
         {
-            string[] parts = str.Split('.');
-            _sources.Add(parts[0]);
-            _variables.Add(parts[1]);
-        }
+            foreach (string str in _strings)
+            {
+                string[] parts = str.Split('.');
+                _sources.Add(parts[0]);
+                _variables.Add(parts[1]);
+            }
+        });
     }
 
     public void Join(/*string keyA, string keyB*/)
@@ -193,7 +200,7 @@ public class Generator
         //    }
         //}
 
-       
+
 
         List<string> join = new();
         string[][] matrix = new string[_stlpce.Count][];
@@ -252,13 +259,15 @@ public class Generator
         _pole = matrix;
     }
 
-    public void JoinOn(string csvKey, string ldapKey)
-    {
+    public async Task JoinOn(string csvKey, string ldapKey, IProgress<int> proggres)
+    { 
         List<SearchResultCollection> ldapS = new();
         List<CSVData> csvS = new();
 
+        int value = 50;
         for (int i = 0; i < _structure.Count; i++)
         {
+            proggres.Report(value);
             if (_structure.GetTypeOf(i) == typeof(CSVData))
             {
                 CSVData subor = _structure.GetItem<CSVData>(i);
@@ -276,22 +285,40 @@ public class Generator
                 List<string> propertyNames = new();
                 SearchResult result = ldap[0];
                 DirectoryEntry resultEntry = result.GetDirectoryEntry();
-                foreach (string propertyName in resultEntry.Properties.PropertyNames)
-                    propertyNames.Add(propertyName);
-
+                await Task.Run(() =>
+                {
+                    
+                    foreach (string propertyName in resultEntry.Properties.PropertyNames)
+                    {
+                        
+                        propertyNames.Add(propertyName);
+                        
+                    }
+                    proggres.Report(60);
+                });
                 csv.AddRow(propertyNames);
 
                 foreach (SearchResult vysledok in ldap)
                 {
                     List<string> values = new();
                     DirectoryEntry vyslednyVstup = vysledok.GetDirectoryEntry();
-                    foreach (string propertyName in propertyNames)
-                        values.Add(vyslednyVstup.InvokeGet(propertyName) + "");
+                    await Task.Run(() =>
+                    {
+
+
+                        foreach (string propertyName in propertyNames)
+                        {
+                            values.Add(vyslednyVstup.InvokeGet(propertyName) + "");
+                            
+                        }
+                        proggres.Report(80);
+                    });
                     csv.AddRow(values);
                 }
 
                 csvS.Add(csv);
             }
+            value += 10;
         }
 
         //foreach (SearchResultCollection ldap in ldapS)
@@ -375,12 +402,32 @@ public class Generator
                 }
                 else if (!spolocnePole.Contains(csv.GetRow(i)[indexCsvStlpca]))
                 {
-                    csv.RemoveRow(i); 
+                    csv.RemoveRow(i);
                 }
 
             }
         }
-        _csvS = csvS;
+
+        // krok 6 a krok 7
+        //Array.Sort(arrayOfArrays, (arr1, arr2) => String.Compare(arr1[2], arr2[2]));
+
+        List<CSVData> csvS2 = new();
+        foreach (CSVData csv in csvS)
+        {
+            List<List<string>> polePoli = csv.GetRows();
+
+            int indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
+
+            polePoli = polePoli.Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
+            polePoli.Insert(0, csv.GetRow(0));
+            CSVData newCsv = new(polePoli);
+            csvS2.Add(newCsv);
+
+            //csv.GetRows().Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
+        }
+
+        //_csvS = csvS;
+        _csvS = csvS2;
     }
 
     static List<string> NajdiSpolocnePrvky(string[][] pole)
@@ -417,5 +464,34 @@ public class Generator
     static bool Obsahuje(string prvek, string[] jednoPole)
     {
         return Array.IndexOf(jednoPole, prvek) != -1;
+    }
+
+    internal bool SourcesExists()
+    {
+        //foreach (ButtonViewModel button in _buttons)
+        //{
+        //    if (!_sources.Contains(button.Content))
+        //    {
+        //        MessageBox.Show("Zdroj neexistuje");
+        //        return false;
+        //    }
+        //}
+
+        return true;
+    }
+
+    internal void CheckVariables()
+    {
+
+    }
+
+    internal async Task Sort()
+    {
+        for (int i = 0; i < _pole.Length; i++)
+        {
+            string[] strings = _pole[i];
+            // sort
+
+        }
     }
 }

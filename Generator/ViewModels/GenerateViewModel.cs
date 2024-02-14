@@ -26,6 +26,9 @@ internal class GenerateViewModel : ObservableObject
     private string _ldapKey;
     public string LdapKey { get => _ldapKey; set { _ldapKey = value; OnPropertyChanged(nameof(LdapKey)); } }
 
+    private int _progresBar;
+    public int ProgresBar { get => _progresBar; set { _progresBar = value; OnPropertyChanged(nameof(ProgresBar)); } }
+
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
     private List<string> _zdroje;
@@ -34,7 +37,7 @@ internal class GenerateViewModel : ObservableObject
     private Generator.Models.Generator _gen;
 
 
-    public GenerateViewModel(Mystructure structure, ObservableCollection<ButtonViewModel> buttons, NavigationStore navigation, NavigationBarViewModel navigationBarViewModel, Login lgi)
+    public GenerateViewModel(Mystructure structure, ObservableCollection<ButtonViewModel> buttons, NavigationStore navigation, NavigationBarViewModel navigationBarViewModel, Login lgi, IS iss)
     {
 
         _zdroje = new();
@@ -44,7 +47,7 @@ internal class GenerateViewModel : ObservableObject
         GenerateComman = new RelayCommand(OnClickGenerate);
         PreviousCommand = new RelayCommand(() =>
         {
-            navigation.CurrentViewModel = new SourcesManagerViewModel(navigation, structure, lgi, navigationBarViewModel);
+            navigation.CurrentViewModel = new SourcesManagerViewModel(navigation, /*structure, lgi,*/ navigationBarViewModel, iss);
         });
 
         _structure = structure;
@@ -61,18 +64,66 @@ internal class GenerateViewModel : ObservableObject
 
         _gen = new(_input, _structure, _buttons);
         _output = "";
+        navigationBarViewModel.Visible();
     }
 
-    private void OnClickGenerate()
+    private async void OnClickGenerate()
     {
+        var progress = new Progress<int>(value =>
+        {
+            ProgresBar = value;
+        });
+
+        //await Task.Run(() => Gen(progress));
+
         Generator.Models.Generator gen = new(Input, _structure, _buttons);
 
-        gen.JoinOn(CsvKey, LdapKey);
-        gen.FindStrings();
-        gen.FindSourcesAndVariables();
-        gen.PrepareVariable();
-        //gen.JoinOn("osCislo", "uidNumber");
-        string output = gen.Generate();
-        Output = output;
+        ProgresBar = 0;
+
+
+        await gen.FindStrings();
+        ProgresBar = 10;
+        await gen.FindSourcesAndVariables();
+        ProgresBar = 20;
+
+        if (gen.SourcesExists())
+        {
+            await gen.JoinOn(CsvKey, LdapKey, progress);
+            ProgresBar = 60;
+            gen.PrepareVariable();
+            ProgresBar = 80;
+
+            //gen.JoinOn("osCislo", "uidNumber");
+            string output = gen.Generate();
+            ProgresBar = 95;
+            Output = output;
+            ProgresBar = 100;
+        }
+
     }
+
+    //private void Gen(IProgress<int> proggres)
+    //{
+    //    proggres.Report(0);
+    //    Generator.Models.Generator gen = new(Input, _structure, _buttons);
+
+    //    gen.FindStrings();
+    //    proggres.Report(10);
+    //    gen.FindSourcesAndVariables();
+    //    proggres.Report(20);
+
+    //    if (gen.SourcesExists())
+    //    {
+    //        //gen.JoinOn(CsvKey, LdapKey);
+    //        proggres.Report(60);
+    //        gen.PrepareVariable();
+    //        proggres.Report(80);
+
+    //        //gen.JoinOn("osCislo", "uidNumber");
+    //        string output = gen.Generate();
+    //        proggres.Report(95);
+    //        Output = output;
+    //        proggres.Report(100);
+    //    }
+    //}
 }

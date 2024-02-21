@@ -58,7 +58,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Header="QUERY">
+            <GroupBox Grid.Row="2" Header="OUTPUT">
                 <TextBox Name="output" Text="{Binding Output}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
             </GroupBox>
         </Grid>

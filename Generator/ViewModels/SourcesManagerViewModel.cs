@@ -22,6 +22,7 @@ public class SourcesManagerViewModel : ObservableObject
     public ICommand ClickCommand { get; }
     public ICommand NextCommand { get; }
     public ICommand PreviousCommand { get; }
+    public ICommand DeleteCommand { get; }
 
     private string _output;
     public string Output { get => _output; set { _output = value; OnPropertyChanged(nameof(Output)); } }
@@ -73,6 +74,16 @@ public class SourcesManagerViewModel : ObservableObject
         });
         NextCommand = new RelayCommand(() => navigation.CurrentViewModel = new GenerateViewModel(_manager.Structure, DynamicButtons, navigation, navigationBarViewModel, iss.GetLogin()/*login*/, iss));
         PreviousCommand = new RelayCommand(() => navigation.CurrentViewModel = new LoginViewModel(navigation,/*structure*/ navigationBarViewModel, iss));
+        DeleteCommand = new RelayCommand<ButtonViewModel>((parameter) =>
+        {
+            if (parameter != null)
+            {
+                string content = parameter.Content;
+                //TODO: dokoncit mazanie
+            }
+            var nieco = DynamicButtons;
+            OnDeleteClick();
+        });
         NavigationBarViewModel = navigationBarViewModel;
         navigationBarViewModel.Visible();
         Update();
@@ -82,6 +93,11 @@ public class SourcesManagerViewModel : ObservableObject
     {
         _count = _manager.DynamicButtons.Count;
         DynamicButtons = _manager.DynamicButtons;
+    }
+
+    private void OnDeleteClick()
+    {
+        //do nothing;
     }
 
     private void OnClickCsvBtn()
@@ -128,7 +144,11 @@ public class SourcesManagerViewModel : ObservableObject
         }
     }
 
-    private void OnClickBtn(int index) => Output = _manager.WriteLDAP(index);
+    private async void OnClickBtn(int index)
+    {
+        string output = await _manager.WriteLDAP(index);
+        Output = output;
+    }
 
     private void OnClickButton(int index) => Output = _manager.WriteCSV(index);
 

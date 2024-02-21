@@ -21,7 +21,7 @@
     <Grid Background="White">
 
         
-        
+
         <GroupBox Header="LDAP connect" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="40" Opacity="1">
             <Grid>
                 <Grid.RowDefinitions>

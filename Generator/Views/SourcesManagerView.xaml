@@ -97,6 +97,19 @@
                 </Button>
             </Grid>
 
+            <Grid Grid.Column="2" Margin="0,0,0,9" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Name="Delete" Width="55" Height="55" Margin="5" Command="{Binding DeleteCommand}"  Cursor="Hand" MouseEnter="OnDeleteBtnEnter" MouseLeave="OnDeleteBtnLeave">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Fill="Red"/>
+                                <Image Source="/Assets/delete-100-512.png" Stretch="UniformToFill" Width="40" Height="40"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
             <Grid Grid.Column="2" Margin="0,0,30, 9"  VerticalAlignment="Bottom" HorizontalAlignment="Right">
 
                 <!-- Tlačidlo -->

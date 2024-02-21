@@ -63,5 +63,17 @@ namespace Generator.Views
             PreviousPage.Width = 50;
             PreviousPage.Margin = new System.Windows.Thickness(5);
         }
+
+        private void OnDeleteBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Delete.Height = 60;
+            Delete.Width = 60;
+        }
+
+        private void OnDeleteBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Delete.Height = 50;
+            Delete.Width = 50;
+        }
     }
 }

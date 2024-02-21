@@ -17,13 +17,12 @@ public class IS
         _structure = structure;
     }
 
-    public IS(Mystructure structure)
+    public IS()
     {
+        _structure = new Mystructure();
         _login = new Login("LDAP://pegasus.fri.uniza.sk", "bezo1", "Logged out");
-        _manager = new Manager(ref structure);
-        _generator = new Generator("", structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
-
-        _structure = structure;
+        _manager = new Manager(ref _structure);
+        _generator = new Generator("", _structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
     }
 
     public Login GetLogin() => _login;

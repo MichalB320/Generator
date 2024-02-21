@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace ClassLibrary;
+﻿namespace ClassLibrary;
 
 public class CSVData
 {
@@ -81,7 +79,7 @@ public class CSVData
                 return row;
             }
         }
-        
+
         return null;
     }
 }

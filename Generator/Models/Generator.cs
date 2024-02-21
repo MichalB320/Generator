@@ -1,6 +1,5 @@
 ﻿using ClassLibrary;
 using Generator.ViewModels;
-using System.CodeDom;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
@@ -20,7 +19,6 @@ public class Generator
     private Mystructure _structure;
     private ObservableCollection<ButtonViewModel> _buttons;
 
-
     private List<CSVData> _csvS;
 
     public Generator(string input, Mystructure structure, ObservableCollection<ButtonViewModel> buttons)
@@ -39,64 +37,24 @@ public class Generator
     public string Generate()
     {
         string input = _input;
-        int count = input.Count(c => c == '$');
 
         StringBuilder sb = new();
+
         for (int j = 0; j < _pole[0].Length; j++)
         {
-            int startIndex1 = -1;
-            for (int i = 0; i < count / 2; i++)
-            {
-                int startIndex = startIndex1;
-                int endIndex = input.IndexOf('$', startIndex + 1);
-                startIndex1 = input.IndexOf('$', endIndex + 1);
-                string subStr = input.Substring(startIndex + 1, endIndex - 1 - startIndex);
-                sb.Append($"{subStr}{_pole[i][j]}");
-            }
-            sb.Append("\n\n");
+            string text = input;
+            for (int i = 0; i < _strings.Count; i++)
+                text = text.Replace(_strings[i], _pole[i][j]);
+
+            text = text.Replace("$", "");
+            sb.Append($"{text}\n\n");
         }
+
         return sb.ToString();
     }
-
-    //useradd $csv.meno$ je v skupine $csv.skupina$ a jeho cislo je $uid$ to som ja.
-    //"useradd -c \"$(cn=Michal*).displayName$\" -d /home/$(cn=Michal*).uid$ -u $(cn=Michal*).uidNumber$ -m -g $(cn=Michal*).gidNumber$ -s /bin/bash $(cn=Michal*).uid$\nchmod 701 /home/$(cn=Michal*).uid$";
-    //public void GenerateLine(int index)
-    //{
-    //    string[] substrs = new string[]
-    //    {
-    //        "useradd -c ", " -d /home/", " -u ", " -m -g ", " -s /bin/bash ", "\nchmod 701 /home/"
-    //    };
-
-    //    string v1 = "";
-
-    //    StringBuilder sb = new StringBuilder();
-    //    for (int i = 0; i < _stlpce.Count; i++)
-    //    {
-    //        Type typ = _stlpce.GetTypeOf(i);
-    //        if (typ != typeof(CSVData))
-    //        {
-    //            SearchResultCollection results = _stlpce.GetItem<SearchResultCollection>(i);
-    //            foreach (SearchResult result in results)
-    //            {
-    //                DirectoryEntry resultEntry = result.GetDirectoryEntry();
-    //                string propName = _variables[i];
-    //                v1 = (string)resultEntry.InvokeGet(propName);
-    //            }
-    //        }
-    //        if (typ == typeof(CSVData))
-    //        {
-    //            int indexCsvStlpca = _stlpce.GetItem<CSVData>(i).GetRow(0).IndexOf(_variables[i]);
-    //            v1 = _stlpce.GetItem<CSVData>(i).GetRow(index + 1)[indexCsvStlpca];//[stlpecCSV]
-    //        }
-
-    //        sb.Append(substrs[i] + "" + v1);
-    //        //string output = jeden + v1 + dva;
-    //    }
-    //}
-
+    
     public void PrepareVariable()
     {
-
         Mystructure stlpce = new();
 
         _pole = new string[][]
@@ -115,8 +73,6 @@ public class Generator
                 foundMatch.Add(btnVM.Content);
             }
         }
-
-
 
         int indexSource = 0;
         foreach (string source in _sources)
@@ -181,34 +137,14 @@ public class Generator
         });
     }
 
-    public void Join(/*string keyA, string keyB*/)
+    public void Join()
     {
-        //List<SearchResultCollection> LdapS = new();
-        //List<CSVData> CsvS = new();
-
-        //for (int i = 0; i < _structure.Count; i++)
-        //{
-        //    if (_structure.GetTypeOf(i) == typeof(CSVData))
-        //    {
-        //        CSVData subor = _structure.GetItem<CSVData>(i);
-        //        CsvS.Add(subor);
-        //    }
-        //    else if (_structure.GetTypeOf(i) != typeof(CSVData))
-        //    {
-        //        SearchResultCollection results = _structure.GetItem<SearchResultCollection>(i);
-        //        LdapS.Add(results);
-        //    }
-        //}
-
-
-
         List<string> join = new();
         string[][] matrix = new string[_stlpce.Count][];
         for (int i = 0; i < _stlpce.Count; i++)
         {
             matrix[i] = new string[_csvS[0].Count]; // 24
         }
-
 
         for (int i = 0; i < _stlpce.Count; i++)
         {
@@ -260,7 +196,7 @@ public class Generator
     }
 
     public async Task JoinOn(string csvKey, string ldapKey, IProgress<int> proggres)
-    { 
+    {
         List<SearchResultCollection> ldapS = new();
         List<CSVData> csvS = new();
 
@@ -287,13 +223,9 @@ public class Generator
                 DirectoryEntry resultEntry = result.GetDirectoryEntry();
                 await Task.Run(() =>
                 {
-                    
                     foreach (string propertyName in resultEntry.Properties.PropertyNames)
-                    {
-                        
                         propertyNames.Add(propertyName);
-                        
-                    }
+
                     proggres.Report(60);
                 });
                 csv.AddRow(propertyNames);
@@ -304,12 +236,9 @@ public class Generator
                     DirectoryEntry vyslednyVstup = vysledok.GetDirectoryEntry();
                     await Task.Run(() =>
                     {
-
-
                         foreach (string propertyName in propertyNames)
                         {
                             values.Add(vyslednyVstup.InvokeGet(propertyName) + "");
-                            
                         }
                         proggres.Report(80);
                     });
@@ -320,30 +249,6 @@ public class Generator
             }
             value += 10;
         }
-
-        //foreach (SearchResultCollection ldap in ldapS)
-        //{
-        //    CSVData csv = new();
-
-        //    List<string> propertyNames = new();
-        //    SearchResult result = ldap[0];
-        //    DirectoryEntry resultEntry = result.GetDirectoryEntry();
-        //    foreach (string propertyName in resultEntry.Properties.PropertyNames)
-        //        propertyNames.Add(propertyName);
-
-        //    csv.AddRow(propertyNames);
-
-        //    foreach (SearchResult vysledok in ldap)
-        //    {
-        //        List<string> values = new();
-        //        DirectoryEntry vyslednyVstup = vysledok.GetDirectoryEntry();
-        //        foreach (string propertyName in propertyNames)
-        //            values.Add(vyslednyVstup.InvokeGet(propertyName) + "");
-        //        csv.AddRow(values);
-        //    }
-
-        //    csvS.Add(csv);
-        //}
 
         //List<string> kluce = new();
         string[][] kluce = new string[csvS.Count][];
@@ -409,8 +314,6 @@ public class Generator
         }
 
         // krok 6 a krok 7
-        //Array.Sort(arrayOfArrays, (arr1, arr2) => String.Compare(arr1[2], arr2[2]));
-
         List<CSVData> csvS2 = new();
         foreach (CSVData csv in csvS)
         {
@@ -418,12 +321,15 @@ public class Generator
 
             int indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
 
+            if (csv.GetRow(0).Contains(ldapKey))
+                indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
+            else
+                indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
+
             polePoli = polePoli.Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
             polePoli.Insert(0, csv.GetRow(0));
             CSVData newCsv = new(polePoli);
             csvS2.Add(newCsv);
-
-            //csv.GetRows().Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
         }
 
         //_csvS = csvS;
@@ -436,7 +342,6 @@ public class Generator
 
         if (pole.Length > 0)
         {
-            // Predpokladáme, že prvé pole obsahuje všetky prvky, ktoré budeme kontrolovať
             foreach (string prvek in pole[0])
             {
                 if (VsetkyPoleObsahuju(prvek, pole))
@@ -468,30 +373,11 @@ public class Generator
 
     internal bool SourcesExists()
     {
-        //foreach (ButtonViewModel button in _buttons)
-        //{
-        //    if (!_sources.Contains(button.Content))
-        //    {
-        //        MessageBox.Show("Zdroj neexistuje");
-        //        return false;
-        //    }
-        //}
-
         return true;
     }
 
     internal void CheckVariables()
     {
 
-    }
-
-    internal async Task Sort()
-    {
-        for (int i = 0; i < _pole.Length; i++)
-        {
-            string[] strings = _pole[i];
-            // sort
-
-        }
     }
 }

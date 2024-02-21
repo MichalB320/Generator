@@ -11,7 +11,6 @@ namespace Generator;
 /// </summary>
 public partial class App : Application
 {
-    private readonly Mystructure _list;
     private readonly IS _is;
 
     private readonly AccountStore _accountStore;
@@ -21,8 +20,7 @@ public partial class App : Application
 
     public App()
     {
-        _list = new Mystructure();
-        _is = new IS(_list);
+        _is = new IS();
 
         _accountStore = new AccountStore();
 

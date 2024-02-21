@@ -30,14 +30,14 @@ public class Manager
         _dynamicButtons = new ObservableCollection<ButtonViewModel>();
     }
 
-    public string WriteLDAP(int index)
+    public async Task<string> WriteLDAP(int index)
     {
         SearchResultCollection results = _struct.GetItem<SearchResultCollection>(index);
-
+        
         StringBuilder sb = new();
         foreach (SearchResult result in results)
-            sb.Append(result.Properties["cn"][0] + "\n");
-
+            await Task.Run(() => sb.Append(result.Properties["cn"][0] + "\n"));
+        
         return sb.ToString();
     }
 

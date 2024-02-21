@@ -14,10 +14,10 @@ public class NavigationBarViewModel : ObservableObject
     public ICommand NavigateGeneratorCommand { get; }
     public ICommand NavigateAccountCommand { get; }
 
-    public Visibility V1 { get; set; }
-    public Visibility V2 { get; set; }
-    public Visibility V3 { get; set; }
-    public bool IsEmpty { get; set; }
+    public Visibility V1 { get; private set; }
+    public Visibility V2 { get; private set; }
+    public Visibility V3 { get; private set; }
+    public bool IsEmpty { get; internal set; }
 
     public NavigationBarViewModel(NavigationStore navigator, IS iss)
     {

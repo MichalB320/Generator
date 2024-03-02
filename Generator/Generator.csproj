@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Assets\csvObrazok.png" />
     <None Remove="Assets\delete-100-512.png" />
+    <None Remove="Assets\gac_-preservation-512.png" />
     <None Remove="Assets\ldapObrazok.png" />
     <None Remove="Assets\next-38-512.png" />
     <None Remove="Assets\previous-38-512.png" />
@@ -18,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,7 @@
   <ItemGroup>
     <Resource Include="Assets\csvObrazok.png" />
     <Resource Include="Assets\delete-100-512.png" />
+    <Resource Include="Assets\gac_-preservation-512.png" />
     <Resource Include="Assets\ldapObrazok.png" />
     <Resource Include="Assets\next-38-512.png" />
     <Resource Include="Assets\previous-38-512.png" />

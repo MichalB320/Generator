@@ -1,4 +1,6 @@
-﻿namespace ClassLibrary;
+﻿using System.Text;
+
+namespace ClassLibrary;
 
 public class CSVData
 {
@@ -81,5 +83,21 @@ public class CSVData
         }
 
         return null;
+    }
+
+    public string String()
+    {
+        StringBuilder sb = new();
+
+        foreach(List<string> row in _rowsCSV)
+        {
+            foreach(string item in row)
+            {
+                sb.Append($"{item};");
+            }
+            sb.Append("\n");
+        }
+
+        return sb.ToString();
     }
 }

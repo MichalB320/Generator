@@ -36,44 +36,46 @@ namespace Generator.Views
             csvBtn.Width = 50;
         }
 
-        private void OnNextBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            NextPage.Height = 60;
-            NextPage.Width = 60;
-            NextPage.Margin = new System.Windows.Thickness(0);
-        }
+        //private void OnNextBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        //{
+        //    NextPage.Height = 60;
+        //    NextPage.Width = 60;
+        //    NextPage.Margin = new System.Windows.Thickness(0);
+        //}
 
-        private void OnNextBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            NextPage.Height = 50;
-            NextPage.Width = 50;
-            NextPage.Margin = new System.Windows.Thickness(5);
-        }
+        //private void OnNextBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        //{
+        //    NextPage.Height = 50;
+        //    NextPage.Width = 50;
+        //    NextPage.Margin = new System.Windows.Thickness(5);
+        //}
 
-        private void OnPreviousBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            PreviousPage.Height = 60;
-            PreviousPage.Width = 60;
-            PreviousPage.Margin = new System.Windows.Thickness(0);
-        }
+        //private void OnPreviousBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        //{
+        //    PreviousPage.Height = 60;
+        //    PreviousPage.Width = 60;
+        //    PreviousPage.Margin = new System.Windows.Thickness(0);
+        //}
 
-        private void OnPreviousBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            PreviousPage.Height = 50;
-            PreviousPage.Width = 50;
-            PreviousPage.Margin = new System.Windows.Thickness(5);
-        }
+        //private void OnPreviousBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        //{
+        //    PreviousPage.Height = 50;
+        //    PreviousPage.Width = 50;
+        //    PreviousPage.Margin = new System.Windows.Thickness(5);
+        //}
 
         private void OnDeleteBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Delete.Height = 60;
             Delete.Width = 60;
+            Delete.Margin = new System.Windows.Thickness(0);
         }
 
         private void OnDeleteBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Delete.Height = 50;
             Delete.Width = 50;
+            Delete.Margin = new System.Windows.Thickness(5);
         }
     }
 }

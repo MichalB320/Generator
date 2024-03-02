@@ -12,8 +12,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="Expression" Grid.Column="0" Text="Condition: " Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <TextBox x:Name="txtBox" Grid.Column="1" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Height="19"/>
-        <Button x:Name="btn" Grid.Column="2" Content="Search" Margin="5" Command="{Binding SearchCommand}" Height="20" Width="80"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock x:Name="Expression" Grid.Row="0" Grid.Column="0" Text="Condition: " Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <TextBox x:Name="txtBox" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Height="19"/>
+        <Button x:Name="btn" Grid.Row="0" Grid.Column="2" Content="Search" Margin="5" Command="{Binding SearchCommand}" Height="20" Width="80"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Info, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

@@ -11,6 +11,6 @@ internal class AccountViewModel : ObservableObject
     public AccountViewModel(NavigationBarViewModel navigationBarViewModel)
     {
         NavigationBarViewModel = navigationBarViewModel;
-        navigationBarViewModel.Visible();
+        //navigationBarViewModel.Visible();
     }
 }

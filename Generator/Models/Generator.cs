@@ -21,7 +21,7 @@ public class Generator
 
     private List<CSVData> _csvS;
 
-    public Generator(string input, Mystructure structure, ObservableCollection<ButtonViewModel> buttons)
+    public Generator(string input, ref Mystructure structure, ObservableCollection<ButtonViewModel> buttons)
     {
         _input = input;
         _strings = new();
@@ -377,6 +377,11 @@ public class Generator
     }
 
     internal void CheckVariables()
+    {
+
+    }
+
+    internal void Save()
     {
 
     }

@@ -83,7 +83,7 @@
 
 
 
-            <Grid Grid.Column="0" Margin="0,0,0,9" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <!--<Grid Grid.Column="0" Margin="0,0,0,9" HorizontalAlignment="Center" VerticalAlignment="Bottom">
 
                 <Button Name="PreviousPage" Width="50" Height="50" Margin="5" Command="{Binding PreviousCommand}" MouseEnter="OnPreviousBtnEnter" MouseLeave="OnPreviousBtnLeave" Cursor="Hand">
                     <Button.Template>
@@ -95,10 +95,10 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-            </Grid>
+            </Grid>-->
 
-            <Grid Grid.Column="2" Margin="0,0,0,9" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                <Button Name="Delete" Width="55" Height="55" Margin="5" Command="{Binding DeleteCommand}"  Cursor="Hand" MouseEnter="OnDeleteBtnEnter" MouseLeave="OnDeleteBtnLeave">
+            <Grid Grid.Column="2" Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Name="Delete" Width="50" Height="50" Margin="5" Command="{Binding DeleteCommand}"  Cursor="Hand" MouseEnter="OnDeleteBtnEnter" MouseLeave="OnDeleteBtnLeave">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -110,12 +110,12 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Column="2" Margin="0,0,30, 9"  VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Grid Grid.Column="2" Margin="0,0,30,9"  VerticalAlignment="Bottom" HorizontalAlignment="Right">
 
                 <!-- Tlačidlo -->
                 <!--<Button Content="Click me" Width="75" Height="25" />-->
 
-                <Button Name="NextPage" Width="50" Height="50" Margin="5" Command="{Binding NextCommand}" MouseEnter="OnNextBtnEnter" MouseLeave="OnNextBtnLeave" Cursor="Hand">
+                <!--<Button Name="NextPage" Width="50" Height="50" Margin="5" Command="{Binding NextCommand}" MouseEnter="OnNextBtnEnter" MouseLeave="OnNextBtnLeave" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -124,7 +124,7 @@
                             </Grid>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>
+                </Button>-->
             </Grid>
         </Grid>
     </Grid>

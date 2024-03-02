@@ -26,12 +26,12 @@ public partial class App : Application
 
         _navigationStore = new NavigationStore();
         _navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _is);
-        _navigationBarViewModel.IsEmpty = true;
+        //_navigationBarViewModel.IsEmpty = true;
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _navigationBarViewModel, _is);//new SourcesManagerViewModel(_manager, _navigationStore);
+        //_navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _navigationBarViewModel, _is);//new SourcesManagerViewModel(_manager, _navigationStore);
 
         MainWindow = new MainWindow()
         {

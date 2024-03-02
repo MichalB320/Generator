@@ -19,43 +19,84 @@
         </Style>
     </UserControl.Resources>
     <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <GroupBox Header="LDAP connect" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="40" Opacity="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+            <GroupBox Header="LDAP connect" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="40" Opacity="1">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Domain: "/>
-                    <TextBox Name="pathTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Domain}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="User: "/>
-                    <TextBox Name="userTextBox"  Grid.Row="1" Grid.Column="1" Text="{Binding UserInput}"/>
-                    <TextBlock x:Name="txtBlok" Grid.Row="2" Grid.Column="0" Text="Password: "/>
-                    <components:BindablePasswordBox Width="180" Margin="0,4,8,4" Grid.Row="2" Grid.Column="1" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Domain: "/>
+                        <TextBox Name="pathTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Domain}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="User: "/>
+                        <TextBox Name="userTextBox"  Grid.Row="1" Grid.Column="1" Text="{Binding UserInput}"/>
+                        <TextBlock x:Name="txtBlok" Grid.Row="2" Grid.Column="0" Text="Password: "/>
+                        <components:BindablePasswordBox Width="180" Margin="0,4,8,4" Grid.Row="2" Grid.Column="1" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Connect" Width="200" Margin="9" Command="{Binding ConnectCommand}" Cursor="Hand"/>
+                        <!--<Button Content="Disconnect" Command="{Binding DisconnectCommand}"/>-->
+                    </StackPanel>
+                    <TextBlock Name="infoLoggedInTextBlock" Grid.Row="2" Text="{Binding Info}"/>
                 </Grid>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Connect" Width="200" Margin="9" Command="{Binding ConnectCommand}" Cursor="Hand"/>
-                    <!--<Button Content="Disconnect" Command="{Binding DisconnectCommand}"/>-->
-                </StackPanel>
-                <TextBlock Name="infoLoggedInTextBlock" Grid.Row="2" Text="{Binding Info}"/>
-            </Grid>
-        </GroupBox>
+            </GroupBox>
 
-        <Grid Grid.Column="2" Margin="0,0,30,30" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <GroupBox Header="E-LEARNING connect" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Margin="40" Opacity="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Domain: "/>
+                        <TextBox Name="pathTextBoxV" Grid.Row="0" Grid.Column="1" Text="{Binding Domain}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="User: "/>
+                        <TextBox Name="userTextBoxV"  Grid.Row="1" Grid.Column="1" Text="{Binding UserInput}"/>
+                        <TextBlock x:Name="txtBlokV" Grid.Row="2" Grid.Column="0" Text="Password: "/>
+                        <components:BindablePasswordBox Width="180" Margin="0,4,8,4" Grid.Row="2" Grid.Column="1" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Connect" Width="200" Margin="9" Command="{Binding ConnectCommand}" Cursor="Hand"/>
+                        <!--<Button Content="Disconnect" Command="{Binding DisconnectCommand}"/>-->
+                    </StackPanel>
+                    <TextBlock Name="infoLoggedInTextBlockV" Grid.Row="2" Text="{Binding Info}"/>
+                </Grid>
+            </GroupBox>
+
+            <!--<Grid Grid.Column="2" Margin="0,0,30,30" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Name="NextPage" Width="50" Height="50" Margin="5" Command="{Binding NextCommand}" MouseLeave="OnMoueseLeave" MouseEnter="OnMouseEnter" Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -66,9 +107,10 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-        </Grid>
+        </Grid>-->
 
-        <components:NavigationBar VerticalAlignment="Bottom" DataContext="{Binding NavigationBarViewModel}"/>
+        </Grid>
+        <components:NavigationBar Grid.Row="1" VerticalAlignment="Bottom" DataContext="{Binding NavigationBarViewModel}"/>
 
     </Grid>
 </UserControl>

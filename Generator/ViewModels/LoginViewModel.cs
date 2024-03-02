@@ -11,8 +11,8 @@ internal class LoginViewModel : ObservableObject
     private readonly Login _loginModel;
 
     public ICommand ConnectCommand { get; }
-    public ICommand DisconnectCommand { get; }
-    public ICommand NextCommand { get; }
+    //public ICommand DisconnectCommand { get; }
+    //public ICommand NextCommand { get; }
 
     public string Domain { get => _loginModel.Domain; set { _loginModel.Domain = value; OnPropertyChanged(nameof(Domain)); } }
     public string UserInput { get => _loginModel.UserName; set { _loginModel.UserName = value; OnPropertyChanged(nameof(UserInput)); } }
@@ -21,16 +21,17 @@ internal class LoginViewModel : ObservableObject
 
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
-    public LoginViewModel(NavigationStore navigator, NavigationBarViewModel navigationBarViewModel, IS iss)
+    public LoginViewModel(/*NavigationStore navigator, */NavigationBarViewModel navigationBarViewModel, IS iss)
     {
         _loginModel = iss.GetLogin();
 
-        navigationBarViewModel.Collapsed();
+        //navigationBarViewModel.Collapsed();
+        //navigationBarViewModel.Visible();
         NavigationBarViewModel = navigationBarViewModel;
 
         ConnectCommand = new RelayCommand(Connect);
-        DisconnectCommand = new RelayCommand(() => Info = _loginModel.LogOut());
-        NextCommand = new RelayCommand(() => navigator.CurrentViewModel = new SourcesManagerViewModel(navigator,/* mystructure, _loginModel,*/ navigationBarViewModel, iss));
+        //DisconnectCommand = new RelayCommand(() => Info = _loginModel.LogOut());
+        //NextCommand = new RelayCommand(() => navigator.CurrentViewModel = new SourcesManagerViewModel(navigator,/* mystructure, _loginModel,*/ navigationBarViewModel, iss));
     }
 
     private async void Connect()

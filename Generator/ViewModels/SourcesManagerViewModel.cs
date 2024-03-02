@@ -20,12 +20,19 @@ public class SourcesManagerViewModel : ObservableObject
     public ICommand LdapCommand { get; }
     public ICommand CsvCommand { get; }
     public ICommand ClickCommand { get; }
-    public ICommand NextCommand { get; }
-    public ICommand PreviousCommand { get; }
+    //public ICommand NextCommand { get; }
+    //public ICommand PreviousCommand { get; }
     public ICommand DeleteCommand { get; }
 
     private string _output;
-    public string Output { get => _output; set { _output = value; OnPropertyChanged(nameof(Output)); } }
+    public string Output { get => _output;
+        set 
+        { 
+            _output = value; 
+            OnPropertyChanged(nameof(Output)); 
+        } 
+    }
+
     public ObservableCollection<ButtonViewModel> DynamicButtons
     {
         get => _manager.DynamicButtons;
@@ -51,7 +58,7 @@ public class SourcesManagerViewModel : ObservableObject
 
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
-    public SourcesManagerViewModel(NavigationStore navigation, /*Mystructure structure, Login login,*/ NavigationBarViewModel navigationBarViewModel, IS iss)
+    public SourcesManagerViewModel(NavigationStore navigation, NavigationBarViewModel navigationBarViewModel, IS iss)
     {
         _lgi = iss.GetLogin();
         _manager = iss.GetManager();
@@ -72,32 +79,61 @@ public class SourcesManagerViewModel : ObservableObject
                     OnClickBtn(parameter.Index);
             }
         });
-        NextCommand = new RelayCommand(() => navigation.CurrentViewModel = new GenerateViewModel(_manager.Structure, DynamicButtons, navigation, navigationBarViewModel, iss.GetLogin()/*login*/, iss));
-        PreviousCommand = new RelayCommand(() => navigation.CurrentViewModel = new LoginViewModel(navigation,/*structure*/ navigationBarViewModel, iss));
-        DeleteCommand = new RelayCommand<ButtonViewModel>((parameter) =>
+        //NextCommand = new RelayCommand(() => navigation.CurrentViewModel = new GenerateViewModel(_manager.Structure, DynamicButtons, navigation, navigationBarViewModel, iss.GetLogin()/*login*/, iss));
+        //PreviousCommand = new RelayCommand(() => navigation.CurrentViewModel = new LoginViewModel(/*navigation,*/ navigationBarViewModel, iss));
+        DeleteCommand = new RelayCommand<ButtonViewModel>(async (parameter) =>
         {
+            int index = -1;
+            for (int i = 0; i < _manager.Structure.Count; i++)
+            {
+                if (_manager.Structure.GetTypeOf(i) == typeof(CSVData))
+                {
+                    string str = _manager.Structure.GetItem<CSVData>(i).String();
+                    if (str == Output)
+                        index = i;
+                }
+                else
+                {
+                    //string str = _manager.Structure.GetItem<SearchResultCollection>(i);
+
+                    string str = await _manager.WriteLDAP(i);
+                    if (str == Output)
+                        index = i;
+                }
+            }
+
+
+            OnDeleteClick(index);
+
             if (parameter != null)
             {
-                string content = parameter.Content;
-                //TODO: dokoncit mazanie
+                
             }
-            var nieco = DynamicButtons;
-            OnDeleteClick();
         });
         NavigationBarViewModel = navigationBarViewModel;
-        navigationBarViewModel.Visible();
-        Update();
+        //navigationBarViewModel.Visible();
+        //Update();
     }
 
-    private void Update()
-    {
-        _count = _manager.DynamicButtons.Count;
-        DynamicButtons = _manager.DynamicButtons;
-    }
+    //private void Update()
+    //{
+    //    _count = _manager.DynamicButtons.Count;
+    //    DynamicButtons = _manager.DynamicButtons;
+    //}
 
-    private void OnDeleteClick()
+    private void OnDeleteClick(int index)
     {
-        //do nothing;
+        DynamicButtons.RemoveAt(index);
+        _manager.Structure.RemoveAt(index);
+        Count--;
+
+        int i = 0;
+        foreach(var button in DynamicButtons)
+        { 
+            button.Index = i;
+            i++;
+        }
+        Output = "";
     }
 
     private void OnClickCsvBtn()
@@ -132,25 +168,44 @@ public class SourcesManagerViewModel : ObservableObject
             conVM.CloseWindowRequested += condWin.CloseWindowHandler;
             condWin.ShowDialog();
 
-            var result = conVM.GetResult();
-            _manager.AddSearchResultCollection(result);
-            Count++;
-            string name = conVM.Filter;
-            AddButtonToStack(name, typeof(SearchResultCollection));
+            try
+            {
+                var result = conVM.GetResult();
+                var filter = conVM.Filter;
+                if (!string.IsNullOrEmpty(filter) && result.Count > 0)
+                {
+                    _manager.AddSearchResultCollection(result);
+                    Count++;
+                    string name = conVM.Filter;
+                    AddButtonToStack(name, typeof(SearchResultCollection));
+                }
+                else
+                {
+                    MessageBox.Show("nothing found", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
         else
         {
-            MessageBox.Show("You have to loggin!.");
+            MessageBox.Show("You have to loggin!.", "stop", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
     }
 
     private async void OnClickBtn(int index)
     {
         string output = await _manager.WriteLDAP(index);
-        Output = output;
+        this.Output = output;
     }
 
-    private void OnClickButton(int index) => Output = _manager.WriteCSV(index);
+    private void OnClickButton(int index) => this.Output = _manager.WriteCSV(index);
 
     private void AddButtonToStack(string content, Type type) => DynamicButtons.Add(new ButtonViewModel(content, ClickCommand, DynamicButtons.Count, type) /*{ Content = content, Command = ClickCommand, Index = _dynamicButtons.Count, Type = type }*/);
 }

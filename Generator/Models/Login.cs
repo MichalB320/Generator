@@ -1,4 +1,5 @@
 ﻿using System.DirectoryServices;
+using System.Windows;
 
 namespace Generator.Models;
 
@@ -58,7 +59,7 @@ public class Login
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            MessageBox.Show(e.Message);
         }
 
         return structure;

@@ -22,7 +22,7 @@ public class IS
         _structure = new Mystructure();
         _login = new Login("LDAP://pegasus.fri.uniza.sk", "bezo1", "Logged out");
         _manager = new Manager(ref _structure);
-        _generator = new Generator("", _structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
+        _generator = new Generator("", ref _structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
     }
 
     public Login GetLogin() => _login;

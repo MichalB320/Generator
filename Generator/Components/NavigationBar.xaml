@@ -39,11 +39,15 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Manager" Command="{Binding NavigateManagerCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding V1}"/>
+            <Button Content="Connect" Command="{Binding NavigateLoginCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <Button Content="Generator" Command="{Binding NavigateGeneratorCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding V2}"/>
+            <TextBlock Text="|" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,10,0"/>
 
-            <Button Content="Account" Command="{Binding NavigateAccountCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding V3}"/>
+            <Button Content="Manager" Command="{Binding NavigateManagerCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+            <Button Content="Generator" Command="{Binding NavigateGeneratorCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Button Content="Account" Command="{Binding NavigateAccountCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
 
         <TextBlock Grid.Column="0" Foreground="White" Text="Navigation" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,3,7,3"/>

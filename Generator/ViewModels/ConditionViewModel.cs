@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using System.DirectoryServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Generator.ViewModels;
@@ -21,7 +22,7 @@ public class ConditionViewModel : ObservableObject
             OnPropertyChanged(nameof(Filter));
         }
     }
-
+    public string Info { get; private set; }
     public ICommand SearchCommand { get; set; }
 
     public delegate void CloseWindowEventHandler();
@@ -32,13 +33,21 @@ public class ConditionViewModel : ObservableObject
         _lgi = lgi;
         _filter = "";
         SearchCommand = new RelayCommand(Search);
+        Info = "OK filter";
     }
 
     private void Search()
     {
-        var filter = Filter;
-        _result = _lgi.Search(filter);
-        CloseWindowRequested?.Invoke();
+        try
+        {
+            var filter = Filter;
+            _result = _lgi.Search(filter);
+            CloseWindowRequested?.Invoke();
+        }
+        catch(Exception e)
+        {
+            MessageBox.Show(e.Message);
+        }
     }
 
     public SearchResultCollection GetResult()

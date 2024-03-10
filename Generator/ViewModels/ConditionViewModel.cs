@@ -10,7 +10,7 @@ namespace Generator.ViewModels;
 public class ConditionViewModel : ObservableObject
 {
     private Login _lgi;
-    private SearchResultCollection _result;
+    private SearchResultCollection? _result;
 
     private string _filter;
     public string Filter
@@ -26,7 +26,7 @@ public class ConditionViewModel : ObservableObject
     public ICommand SearchCommand { get; set; }
 
     public delegate void CloseWindowEventHandler();
-    public event CloseWindowEventHandler CloseWindowRequested;
+    public event CloseWindowEventHandler? CloseWindowRequested;
 
     public ConditionViewModel(Login lgi)
     {
@@ -44,7 +44,7 @@ public class ConditionViewModel : ObservableObject
             _result = _lgi.Search(filter);
             CloseWindowRequested?.Invoke();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             MessageBox.Show(e.Message);
         }

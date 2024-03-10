@@ -9,7 +9,7 @@ public class MainViewModel : ObservableObject
     public ObservableObject CurrentViewModel => _navigationStore.CurrentViewModel;
 
     public MainViewModel(NavigationStore navigation)
-    { 
+    {
         //CurrentViewModel = new SourcesManagerViewModel(manager);
         _navigationStore = navigation;
 

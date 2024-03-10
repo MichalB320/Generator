@@ -1,5 +1,4 @@
-﻿using ClassLibrary;
-using Generator.Models;
+﻿using Generator.Models;
 using Generator.Stores;
 using Generator.ViewModels;
 using System.Windows;
@@ -13,8 +12,6 @@ public partial class App : Application
 {
     private readonly IS _is;
 
-    private readonly AccountStore _accountStore;
-
     private readonly NavigationStore _navigationStore;
     private readonly NavigationBarViewModel _navigationBarViewModel;
 
@@ -22,11 +19,8 @@ public partial class App : Application
     {
         _is = new IS();
 
-        _accountStore = new AccountStore();
-
         _navigationStore = new NavigationStore();
         _navigationBarViewModel = new NavigationBarViewModel(_navigationStore, _is);
-        //_navigationBarViewModel.IsEmpty = true;
     }
 
     protected override void OnStartup(StartupEventArgs e)

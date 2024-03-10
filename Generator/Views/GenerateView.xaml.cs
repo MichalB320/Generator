@@ -10,6 +10,7 @@ namespace Generator.Views
         public GenerateView()
         {
             InitializeComponent();
+            Save.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         //private void OnPreviousBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -38,6 +39,14 @@ namespace Generator.Views
             Save.Height = 50;
             Save.Width = 50;
             Save.Margin = new System.Windows.Thickness(5);
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (output.Text == "")
+                Save.Visibility = System.Windows.Visibility.Collapsed;
+            else
+                Save.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

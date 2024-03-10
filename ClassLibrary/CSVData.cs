@@ -89,9 +89,9 @@ public class CSVData
     {
         StringBuilder sb = new();
 
-        foreach(List<string> row in _rowsCSV)
+        foreach (List<string> row in _rowsCSV)
         {
-            foreach(string item in row)
+            foreach (string item in row)
             {
                 sb.Append($"{item};");
             }

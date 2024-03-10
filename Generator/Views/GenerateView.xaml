@@ -59,7 +59,7 @@
             </GroupBox>
 
             <GroupBox Grid.Row="2" Header="OUTPUT">
-                <TextBox Name="output" Text="{Binding Output}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+                <TextBox Name="output" Text="{Binding Output}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextChanged="OnTextChanged"/>
             </GroupBox>
         </Grid>
 

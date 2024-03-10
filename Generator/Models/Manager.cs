@@ -1,6 +1,4 @@
 ﻿using ClassLibrary;
-using Generator.ViewModels;
-using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
 
@@ -11,33 +9,33 @@ public class Manager
     private Mystructure _struct;
     public Mystructure Structure { get => _struct; }
 
-    private ObservableCollection<ButtonViewModel> _dynamicButtons;
-    public ObservableCollection<ButtonViewModel> DynamicButtons
-    {
-        get => _dynamicButtons;
-        set
-        {
-            if (_dynamicButtons != value)
-            {
-                _dynamicButtons = value;
-            }
-        }
-    }
+    //private ObservableCollection<ButtonViewModel> _dynamicButtons;
+    //public ObservableCollection<ButtonViewModel> DynamicButtons
+    //{
+    //    get => _dynamicButtons;
+    //    set
+    //    {
+    //        if (_dynamicButtons != value)
+    //        {
+    //            _dynamicButtons = value;
+    //        }
+    //    }
+    //}
 
     public Manager(ref Mystructure structure)
     {
         _struct = structure;
-        _dynamicButtons = new ObservableCollection<ButtonViewModel>();
+        //_dynamicButtons = new ObservableCollection<ButtonViewModel>();
     }
 
     public async Task<string> WriteLDAP(int index)
     {
         SearchResultCollection results = _struct.GetItem<SearchResultCollection>(index);
-        
+
         StringBuilder sb = new();
         foreach (SearchResult result in results)
             await Task.Run(() => sb.Append(result.Properties["cn"][0] + "\n"));
-        
+
         return sb.ToString();
     }
 

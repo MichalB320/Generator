@@ -6,6 +6,7 @@ using Generator.Stores;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Generator.ViewModels;
@@ -78,10 +79,18 @@ internal class GenerateViewModel : ObservableObject
         sfd.CheckFileExists = false;
         sfd.CheckPathExists = true;
         sfd.ShowDialog();
-        
-        using (StreamWriter sw = new StreamWriter(sfd.FileName))
+
+
+        if (sfd.FileName != "")
         {
-            sw.Write(Output);
+            using (StreamWriter sw = new StreamWriter(sfd.FileName))
+            {
+                sw.Write(Output);
+            }
+        }
+        else
+        {
+            MessageBox.Show("FileName is empty!", "warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 
@@ -95,7 +104,7 @@ internal class GenerateViewModel : ObservableObject
         //await Task.Run(() => Gen(progress));
 
         //Generator.Models.Generator gen = new(Input, _structure, _buttons);
-        Generator.Models.Generator gen = new(Input, ref _is.GetStructure(), _is.GetManager().DynamicButtons);
+        Generator.Models.Generator gen = new(Input, ref _is.GetStructure(), _is.DynamicButtons/*_is.GetManager().DynamicButtons*/);
 
         ProgresBar = 0;
 

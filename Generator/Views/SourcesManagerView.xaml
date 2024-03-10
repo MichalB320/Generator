@@ -78,9 +78,8 @@
             </Grid>
 
             <Grid Grid.Column="2" Background="#FF4D4D4D" Margin="0.5">
-                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged" IsReadOnly="True"/>
             </Grid>
-
 
 
             <!--<Grid Grid.Column="0" Margin="0,0,0,9" HorizontalAlignment="Center" VerticalAlignment="Bottom">
@@ -98,7 +97,7 @@
             </Grid>-->
 
             <Grid Grid.Column="2" Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Button Name="Delete" Width="50" Height="50" Margin="5" Command="{Binding DeleteCommand}"  Cursor="Hand" MouseEnter="OnDeleteBtnEnter" MouseLeave="OnDeleteBtnLeave">
+                <Button Name="Delete" Width="50" Height="50" Margin="5" Command="{Binding DeleteCommand}" Cursor="Hand" MouseEnter="OnDeleteBtnEnter" MouseLeave="OnDeleteBtnLeave">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>

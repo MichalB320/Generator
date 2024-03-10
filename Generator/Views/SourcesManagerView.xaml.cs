@@ -10,6 +10,7 @@ namespace Generator.Views
         public SourcesManagerView()
         {
             InitializeComponent();
+            Delete.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void OnLdapBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -76,6 +77,14 @@ namespace Generator.Views
             Delete.Height = 50;
             Delete.Width = 50;
             Delete.Margin = new System.Windows.Thickness(5);
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ukazka.Text == "")
+                Delete.Visibility = System.Windows.Visibility.Collapsed;
+            else
+                Delete.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

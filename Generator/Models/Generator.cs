@@ -3,6 +3,7 @@ using Generator.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
+using System.Windows;
 
 namespace Generator.Models;
 
@@ -52,7 +53,7 @@ public class Generator
 
         return sb.ToString();
     }
-    
+
     public void PrepareVariable()
     {
         Mystructure stlpce = new();
@@ -325,8 +326,14 @@ public class Generator
                 indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
             else
                 indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
-
-            polePoli = polePoli.Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
+            try
+            {
+                polePoli = polePoli.Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             polePoli.Insert(0, csv.GetRow(0));
             CSVData newCsv = new(polePoli);
             csvS2.Add(newCsv);

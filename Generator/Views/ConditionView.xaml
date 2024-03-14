@@ -23,5 +23,11 @@
         <TextBox x:Name="txtBox" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Height="19"/>
         <Button x:Name="btn" Grid.Row="0" Grid.Column="2" Content="Search" Margin="5" Command="{Binding SearchCommand}" Height="20" Width="80"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Info, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Image Source="/Assets/filtering.png"/>
+        </Grid>
+        
+
     </Grid>
 </UserControl>

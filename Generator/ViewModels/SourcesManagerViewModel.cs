@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
+using Generator.Views;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
@@ -19,8 +20,13 @@ public class SourcesManagerViewModel : ObservableObject
 
     public ICommand LdapCommand { get; }
     public ICommand CsvCommand { get; }
+    public ICommand EVCommand { get; }
     public ICommand ClickCommand { get; }
     public ICommand DeleteCommand { get; }
+    public ICommand EditCommand { get; }
+
+    private bool _isReadOnly = true;
+    public bool IsReadOnly { get => _isReadOnly; set { _isReadOnly = value; OnPropertyChanged(nameof(IsReadOnly)); } }
 
     private string _output;
     public string Output { get => _output; set { _output = value; OnPropertyChanged(nameof(Output)); } }
@@ -90,7 +96,20 @@ public class SourcesManagerViewModel : ObservableObject
 
             }
         });
+        EVCommand = new RelayCommand(OnClickEVBtn);
+        EditCommand = new RelayCommand(OnClickEditBtn);
         NavigationBarViewModel = navigationBarViewModel;
+    }
+
+    private void OnClickEditBtn()
+    {
+        if (IsReadOnly)
+        {
+            IsReadOnly = false;
+        }
+        else
+            IsReadOnly = true;
+        
     }
 
     private void OnDeleteClick(int index)
@@ -130,6 +149,30 @@ public class SourcesManagerViewModel : ObservableObject
             //---------------
             _mystructure.Add<CSVData>(csv);
         }
+    }
+
+    private void OnClickEVBtn()
+    {
+        UrlViewModel urlVM = new();
+
+        UrlWindow urlWin = new()
+        {
+            DataContext = urlVM,
+        };
+
+        urlWin.ShowDialog();
+
+        urlVM.GetCSVFormat();
+        //string vars = urlVM.WebData;
+        //string vars = urlVM.People.ToString();
+        //Output = vars;
+        CSVData csv = new(urlVM.csv);
+        _is.AddCSV(csv);
+        Count++;
+        string name = "predmety";
+        AddButtonToStack(name, typeof(CSVData));
+        //------
+        _mystructure.Add<CSVData>(csv);
     }
 
     private void OnClickLdapBtn()

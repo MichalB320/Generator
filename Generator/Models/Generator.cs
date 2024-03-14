@@ -1,4 +1,5 @@
 ﻿using ClassLibrary;
+using CommunityToolkit.Mvvm.Messaging;
 using Generator.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
@@ -40,69 +41,85 @@ public class Generator
         string input = _input;
 
         StringBuilder sb = new();
-
-        for (int j = 0; j < _pole[0].Length; j++)
+        try
         {
-            string text = input;
-            for (int i = 0; i < _strings.Count; i++)
-                text = text.Replace(_strings[i], _pole[i][j]);
+            
 
-            text = text.Replace("$", "");
-            sb.Append($"{text}\n\n");
+            for (int j = 0; j < _pole[0].Length; j++)
+            {
+                string text = input;
+                for (int i = 0; i < _strings.Count; i++)
+                    text = text.Replace(_strings[i], _pole[i][j]);
+
+                text = text.Replace("$", "");
+                sb.Append($"{text}\n\n");
+            }
+
+            
         }
-
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message);
+        }
         return sb.ToString();
     }
 
     public void PrepareVariable()
     {
-        Mystructure stlpce = new();
-
-        _pole = new string[][]
+        try
         {
+            Mystructure stlpce = new();
+
+            _pole = new string[][]
+            {
             new string[] { "michal", "maria", "jozko" },
             new string[] { "513", "514", "515"},
             new string[] { "559550", "559024", "559011"}
-        };
+            };
 
-        List<string> foundMatch = new List<string>();
+            List<string> foundMatch = new List<string>();
 
-        foreach (ButtonViewModel btnVM in _buttons)
-        {
-            if (_sources.Contains(btnVM.Content))
+            foreach (ButtonViewModel btnVM in _buttons)
             {
-                foundMatch.Add(btnVM.Content);
+                if (_sources.Contains(btnVM.Content))
+                {
+                    foundMatch.Add(btnVM.Content);
+                }
             }
+
+            int indexSource = 0;
+            foreach (string source in _sources)
+            {
+                ButtonViewModel btn = _buttons.FirstOrDefault(BtnVM => BtnVM.Content == _sources[indexSource]);
+
+                int index = _buttons.IndexOf(btn);
+
+                if (_buttons[index].Type == typeof(CSVData))
+                {
+                    //CSVData csv = _structure.GetItem<CSVData>(index);
+                    CSVData csv = _csvS[index];
+                    stlpce.Add(csv);
+                }
+                if (_buttons[index].Type == typeof(SearchResultCollection))
+                {
+                    //SearchResultCollection ldap = _structure.GetItem<SearchResultCollection>(index);
+                    CSVData csv = _csvS[index];
+                    //stlpce.Add(ldap);
+
+                    stlpce.Add(csv);
+                }
+                indexSource++;
+            }
+
+
+            _stlpce = stlpce;
+
+            Join();
         }
-
-        int indexSource = 0;
-        foreach (string source in _sources)
+        catch (Exception e)
         {
-            ButtonViewModel btn = _buttons.FirstOrDefault(BtnVM => BtnVM.Content == _sources[indexSource]);
-
-            int index = _buttons.IndexOf(btn);
-
-            if (_buttons[index].Type == typeof(CSVData))
-            {
-                //CSVData csv = _structure.GetItem<CSVData>(index);
-                CSVData csv = _csvS[index];
-                stlpce.Add(csv);
-            }
-            if (_buttons[index].Type == typeof(SearchResultCollection))
-            {
-                //SearchResultCollection ldap = _structure.GetItem<SearchResultCollection>(index);
-                CSVData csv = _csvS[index];
-                //stlpce.Add(ldap);
-
-                stlpce.Add(csv);
-            }
-            indexSource++;
+            MessageBox.Show(e.Message);
         }
-
-
-        _stlpce = stlpce;
-
-        Join();
     }
 
     public async Task FindStrings()

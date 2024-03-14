@@ -9,16 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\cross-15-512.png" />
     <None Remove="Assets\csvObrazok.png" />
     <None Remove="Assets\delete-100-512.png" />
+    <None Remove="Assets\favicon.ico" />
+    <None Remove="Assets\filtering.png" />
     <None Remove="Assets\gac_-preservation-512.png" />
     <None Remove="Assets\ldapObrazok.png" />
     <None Remove="Assets\next-38-512.png" />
+    <None Remove="Assets\pencil-46-512.png" />
     <None Remove="Assets\previous-38-512.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.59" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,11 +31,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\cross-15-512.png" />
     <Resource Include="Assets\csvObrazok.png" />
     <Resource Include="Assets\delete-100-512.png" />
+    <Resource Include="Assets\favicon.ico" />
+    <Resource Include="Assets\filtering.png" />
     <Resource Include="Assets\gac_-preservation-512.png" />
     <Resource Include="Assets\ldapObrazok.png" />
     <Resource Include="Assets\next-38-512.png" />
+    <Resource Include="Assets\pencil-46-512.png" />
     <Resource Include="Assets\previous-38-512.png" />
   </ItemGroup>
 

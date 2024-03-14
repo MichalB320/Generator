@@ -19,6 +19,24 @@ public class CSVData
         _rowsCSV = new();
     }
 
+    public CSVData(string content)
+    {
+        _rowsCSV = new();
+        var rows = content.Split('\n');
+        //var items = new List<string>();
+        
+        
+        foreach (var row in rows)
+        {
+            List<string> itemsL = new();
+            var items = row.Split(';');
+            foreach (var item in items)
+                itemsL.Add(item);
+
+            _rowsCSV.Add(itemsL);
+        }
+    }
+
     public CSVData(List<List<string>> rows)
     {
         _rowsCSV = rows;

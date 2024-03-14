@@ -81,7 +81,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Domain: "/>
-                        <TextBox Name="pathTextBoxV" Grid.Row="0" Grid.Column="1" Text="{Binding Domain}"/>
+                        <TextBox Name="pathTextBoxV" Grid.Row="0" Grid.Column="1" Text="https://vzdelavanie.uniza.sk/vzdelavanie/index.php"/>
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="User: "/>
                         <TextBox Name="userTextBoxV"  Grid.Row="1" Grid.Column="1" Text="{Binding UserInput}"/>
                         <TextBlock x:Name="txtBlokV" Grid.Row="2" Grid.Column="0" Text="Password: "/>
@@ -92,7 +92,7 @@
                         <Button Content="Connect" Width="200" Margin="9" Command="{Binding ConnectCommand}" Cursor="Hand"/>
                         <!--<Button Content="Disconnect" Command="{Binding DisconnectCommand}"/>-->
                     </StackPanel>
-                    <TextBlock Name="infoLoggedInTextBlockV" Grid.Row="2" Text="{Binding Info}"/>
+                    <TextBlock Name="infoLoggedInTextBlockV" Grid.Row="2" Text="{Binding InfoV}"/>
                 </Grid>
             </GroupBox>
 

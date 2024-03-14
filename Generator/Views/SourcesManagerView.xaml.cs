@@ -11,6 +11,7 @@ namespace Generator.Views
         {
             InitializeComponent();
             Delete.Visibility = System.Windows.Visibility.Collapsed;
+            EditBtn.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void OnLdapBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -82,9 +83,41 @@ namespace Generator.Views
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (ukazka.Text == "")
+            {
                 Delete.Visibility = System.Windows.Visibility.Collapsed;
+                EditBtn.Visibility = System.Windows.Visibility.Collapsed;
+            }
             else
+            {
                 Delete.Visibility = System.Windows.Visibility.Visible;
+                EditBtn.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        private void OnEVBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            evBtn.Height = 60;
+            evBtn.Width = 60;
+        }
+
+        private void OnEVBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            evBtn.Height = 50;
+            evBtn.Width = 50;
+        }
+
+        private void OnEditBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            EditBtn.Height = 60;
+            EditBtn.Width = 60;
+            EditBtn.Margin = new System.Windows.Thickness(0);
+        }
+
+        private void OnEditBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            EditBtn.Height = 50;
+            EditBtn.Width = 50;
+            EditBtn.Margin = new System.Windows.Thickness(5);
         }
     }
 }

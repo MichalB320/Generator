@@ -26,6 +26,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -42,7 +43,7 @@
                     </Grid>
 
                     <Grid Grid.Row="1">
-                        <Button Name="csvBtn" Width="55" Height="55" Margin="5" Command="{Binding CsvCommand}" MouseEnter="OnCsvBtnEnter" MouseLeave="OnCsvBtnLeave" Cursor="Hand">
+                        <Button Name="csvBtn" Width="50" Height="50" Margin="5" Command="{Binding CsvCommand}" MouseEnter="OnCsvBtnEnter" MouseLeave="OnCsvBtnLeave" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
@@ -53,6 +54,21 @@
                             </Button.Template>
                         </Button>
                     </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Button Name="evBtn" Width="50" Height="50" Margin="5" Command="{Binding EVCommand}" Cursor="Hand" MouseEnter="OnEVBtnEnter" MouseLeave="OnEVBtnLeave">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Ellipse Name="csvEllipse" Fill="White"/>
+                                        <Image Source="/Assets/favicon.ico" Stretch="UniformToFill" Width="40" Height="40"/>
+                                        <!--<Image Source="/Assets/csvObrazok.png" Stretch="UniformToFill" Width="40" Height="40"/>-->
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                    
                 </Grid>
             </Grid>
 
@@ -78,7 +94,7 @@
             </Grid>
 
             <Grid Grid.Column="2" Background="#FF4D4D4D" Margin="0.5">
-                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged" IsReadOnly="True"/>
+                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged" IsReadOnly="{Binding IsReadOnly}"/>
             </Grid>
 
 
@@ -109,22 +125,19 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Column="2" Margin="0,0,30,9"  VerticalAlignment="Bottom" HorizontalAlignment="Right">
-
-                <!-- Tlačidlo -->
-                <!--<Button Content="Click me" Width="75" Height="25" />-->
-
-                <!--<Button Name="NextPage" Width="50" Height="50" Margin="5" Command="{Binding NextCommand}" MouseEnter="OnNextBtnEnter" MouseLeave="OnNextBtnLeave" Cursor="Hand">
+            <Grid Grid.Column="2" Margin="0,0,100,9"  VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Button Name="EditBtn" Width="50" Height="50" Margin="5" Cursor="Hand" Command="{Binding EditCommand}"  MouseEnter="OnEditBtnEnter" MouseLeave="OnEditBtnLeave">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
                                 <Ellipse Fill="White"/>
-                                <Image Source="/Assets/next-38-512.png" Stretch="UniformToFill" Width="40" Height="40"/>
+                                <Image Source="/Assets/pencil-46-512.png" Stretch="UniformToFill" Width="40" Height="40"/>
                             </Grid>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>-->
+                </Button>
             </Grid>
+            
         </Grid>
     </Grid>
 </UserControl>

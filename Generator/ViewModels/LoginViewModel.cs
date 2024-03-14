@@ -15,6 +15,7 @@ internal class LoginViewModel : ObservableObject
     public string UserInput { get; set; }
     public string Password { private get; set; } = string.Empty;
     public string Info { get => _is.Info; set { _is.Info = value; OnPropertyChanged(nameof(Info)); } }
+    public string InfoV { get; set; }
 
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
@@ -26,6 +27,8 @@ internal class LoginViewModel : ObservableObject
 
         NavigationBarViewModel = navigationBarViewModel;
         ConnectCommand = new RelayCommand(Connect);
+
+        InfoV = "logged out";
     }
 
     private async void Connect() => Info = await Task.Run(() => _is.Login(Domain, UserInput, Password));

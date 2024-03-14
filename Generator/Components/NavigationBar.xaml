@@ -47,7 +47,7 @@
 
             <Button Content="Generator" Command="{Binding NavigateGeneratorCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <Button Content="Account" Command="{Binding NavigateAccountCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <!--<Button Content="Account" Command="{Binding NavigateAccountCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         </StackPanel>
 
         <TextBlock Grid.Column="0" Foreground="White" Text="Navigation" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,3,7,3"/>

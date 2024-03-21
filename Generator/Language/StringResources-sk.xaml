@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:local="clr-namespace:Generator.Language"
+                    xmlns:system="clr-namespace:System;assembly=netstandard">
+    <!--menu and navigation bar-->
+    <system:String x:Key="file">Súbor</system:String>
+    <system:String x:Key="connect">Pripojiť</system:String>
+    <system:String x:Key="manager">Manažér</system:String>
+    <system:String x:Key="dataGrid">DataGrid</system:String>
+    <system:String x:Key="textBox">TextBox</system:String>
+    <system:String x:Key="deleteAll">Vymazať všetko</system:String>
+    <system:String x:Key="generator">Generátor</system:String>
+    <system:String x:Key="delimiter">Odeľovač</system:String>
+    <system:String x:Key="key">Kľúč</system:String>
+    <system:String x:Key="save">Uložiť</system:String>
+    <system:String x:Key="language">Jazyk</system:String>
+    <system:String x:Key="english">Anglický</system:String>
+    <system:String x:Key="slovak">Slovenský</system:String>
+    <system:String x:Key="navigation">Navigačný panel</system:String>
+
+    <!--ĺoginView-->
+    <system:String x:Key="ldapHeader">LDAP Pripojenie</system:String>
+    <system:String x:Key="domain">Doména:</system:String>
+    <system:String x:Key="user">Používateľ:</system:String>
+    <system:String x:Key="password">Heslo:</system:String>
+
+    <system:String x:Key="loggedIn">Prihlásený</system:String>
+    <system:String x:Key="IncorrectCredentialsError">Nesprávne prihlasovacie údaje.</system:String>
+    <system:String x:Key="ServerNotOperationalError">Server nie je k dispozícií.</system:String>
+
+    <!--conditionView-->
+    <system:String x:Key="condition">Podmienka: </system:String>
+    <system:String x:Key="search">Vyhľadaj</system:String>
+    <system:String x:Key="ldapManual">Návod na filtrovanie LDAP</system:String>
+
+    <system:String x:Key="loginWarning">Nie ste pripojný k LDAP serveru.</system:String>
+    <system:String x:Key="nothingFound">Nič nebolo nájdené.</system:String>
+    <system:String x:Key="warning">Varovanie</system:String>
+</ResourceDictionary>

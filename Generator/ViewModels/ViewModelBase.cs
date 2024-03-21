@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 
 namespace Generator.ViewModels;
 
-public class ViewModelBase : INotifyPropertyChanged
+public class ViewModelBase : ObservableObject
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 

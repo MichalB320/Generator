@@ -24,8 +24,8 @@ public class CSVData
         _rowsCSV = new();
         var rows = content.Split('\n');
         //var items = new List<string>();
-        
-        
+
+
         foreach (var row in rows)
         {
             List<string> itemsL = new();

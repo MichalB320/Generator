@@ -1,5 +1,4 @@
 ﻿using ClassLibrary;
-using CommunityToolkit.Mvvm.Messaging;
 using Generator.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
@@ -43,8 +42,6 @@ public class Generator
         StringBuilder sb = new();
         try
         {
-            
-
             for (int j = 0; j < _pole[0].Length; j++)
             {
                 string text = input;
@@ -52,10 +49,8 @@ public class Generator
                     text = text.Replace(_strings[i], _pole[i][j]);
 
                 text = text.Replace("$", "");
-                sb.Append($"{text}\n\n");
+                sb.Append($"{text}\n");
             }
-
-            
         }
         catch (Exception e)
         {

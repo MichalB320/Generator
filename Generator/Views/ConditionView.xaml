@@ -18,16 +18,44 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock x:Name="Expression" Grid.Row="0" Grid.Column="0" Text="Condition: " Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <TextBox x:Name="txtBox" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Height="19"/>
-        <Button x:Name="btn" Grid.Row="0" Grid.Column="2" Content="Search" Margin="5" Command="{Binding SearchCommand}" Height="20" Width="80"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Info, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Grid Grid.Column="1" Grid.Row="2">
-            <Image Source="/Assets/filtering.png"/>
-        </Grid>
-        
+        <TextBlock x:Name="Expression" Grid.Row="0" Grid.Column="0" Text="{DynamicResource condition}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <TextBox x:Name="txtBox" Grid.Row="0" Grid.Column="1" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="btn" Grid.Row="0" Grid.Column="2" Content="{DynamicResource search}" Margin="5" Command="{Binding SearchCommand}" Height="20" Width="80"/>
 
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Alias: " Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Alias}"/>
+
+        <Expander Grid.Row="2" Grid.Column="1" Header="{DynamicResource ldapManual}">
+            <TextBlock TextWrapping="Wrap">
+                <StackPanel>
+                    <TextBlock Text="The search criteria have to be put in parentheses and then the whole term has to be bracketed one more time."/>
+                    <TextBlock Text="AND Operation:"/>
+                    <TextBlock Text="(&amp; (...K1...) (...K2...))   or with more than two criteria:   (&amp; (...K1...) (...K2...) (...K3...) (...K4...))"/>
+                    <TextBlock Text="OR Operation:"/>
+                    <TextBlock Text="(| (...K1...) (...K2...))   or with more than two criteria:     (| (...K1...) (...K2...) (...K3...) (...K4...))"/>
+                    <TextBlock Text="Nested Operation:"/>
+                    <TextBlock Text="Every AND/OR operation can also be understood as a single criterion:"/>
+                    <TextBlock Text="(|(&amp; (...K1...) (...K2...))(&amp; (...K3...) (...K4...)))        means:        (K1 AND K2) OR (K3 AND K4)"/>
+                    <TextBlock Text="The search criteria have to be put in parentheses and then the whole term has to be bracketed one more time."/>
+                    <TextBlock Text="Equality:"/>
+                    <TextBlock Text="(attribute=abc)     , e.g. (&amp;(objectclass=user)(displayName=Foeckeler)"/>
+                    <TextBlock Text="Negation:"/>
+                    <TextBlock Text="(!(attribute=abc))     , e.g. (!objectClass=group)"/>
+                    <TextBlock Text="Presence:"/>
+                    <TextBlock Text="(attribute=*)        , e.g. (mailNickName=*)"/>
+                    <TextBlock Text="Absence:"/>
+                    <TextBlock Text="(!(attribute=*))        , e.g. (!proxyAddresses=*)"/>
+                    <TextBlock Text="Greater than:"/>
+                    <TextBlock Text="(attribute>=abc)    , e.g. (mdbStorageQuota>=100000)"/>
+                    <TextBlock Text="Less than:"/>
+                    <TextBlock Text="(attribute&lt;=abc)    , e.g. (mdbStorageQuota&lt;=100000)"/>
+                    <TextBlock Text="Proximity:"/>
+                    <TextBlock Text="(attribute~=abc)    , e.g. (displayName~=Foeckeler) Caution: ~= is treated as = in ADS environments !!"/>
+                    <TextBlock Text="Wildcards:"/>
+                    <TextBlock Text="e.g. (sn=F*) or (mail=*@cerrotorre.de) or (givenName=*Paul*)"/>
+                </StackPanel>
+            </TextBlock>
+        </Expander>
     </Grid>
 </UserControl>

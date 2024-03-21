@@ -63,30 +63,8 @@
             </GroupBox>
         </Grid>
 
-        <!--<Grid Margin="14,0,0, 9" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <Button Name="PreviousPage" Width="50" Height="50" Margin="5" Command="{Binding PreviousCommand}" MouseEnter="OnPreviousBtnEnter" MouseLeave="OnPreviousBtnLeave" Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Fill="Black"/>
-                            <Image Source="/Assets/previous-38-512.png" Stretch="UniformToFill" Width="40" Height="40"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </Grid>-->
-
         <Grid Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Name="Save" Width="50" Height="50" Margin="5" Command="{Binding SaveCommand}"  Cursor="Hand" MouseEnter="OnSaveBtnEnter" MouseLeave="OnSaveBtnLeave">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Fill="Black"/>
-                            <Image Source="/Assets/gac_-preservation-512.png" Stretch="UniformToFill" Width="40" Height="40"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <components:CustomButoon x:Name="Save" Image="/Assets/gac_-preservation-512.png" Command="{Binding SaveCommand}" Color="Black"/>
         </Grid>
     </Grid>
 </UserControl>

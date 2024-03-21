@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
-using Generator.Views;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
@@ -109,7 +108,7 @@ public class SourcesManagerViewModel : ObservableObject
         }
         else
             IsReadOnly = true;
-        
+
     }
 
     private void OnDeleteClick(int index)
@@ -177,9 +176,9 @@ public class SourcesManagerViewModel : ObservableObject
 
     private void OnClickLdapBtn()
     {
-        if (_is.GetLogin().ExistsSearcher() /*_lgi.ExistsSearcher()*/)
+        if (_is.GetLogin().ExistsSearcher())
         {
-            ConditionViewModel conVM = new(_is.GetLogin()/*_lgi*/);
+            ConditionViewModel conVM = new(_is.GetLogin());
 
             ConditionWindow condWin = new()
             {
@@ -197,12 +196,12 @@ public class SourcesManagerViewModel : ObservableObject
                     _is.AddSearchResulCollection(result);
                     _mystructure.Add<SearchResultCollection>(result);
                     Count++;
-                    string name = conVM.Filter;
+                    string name = conVM.Alias; //conVM.Filter;
                     AddButtonToStack(name, typeof(SearchResultCollection));
                 }
                 else
                 {
-                    MessageBox.Show("nothing found", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(Application.Current.FindResource("nothingFound") as string, Application.Current.FindResource("warning") as string, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (ArgumentException ex)
@@ -216,7 +215,7 @@ public class SourcesManagerViewModel : ObservableObject
         }
         else
         {
-            MessageBox.Show("You have to loggin!.", "stop", MessageBoxButton.OK, MessageBoxImage.Stop);
+            MessageBox.Show(Application.Current.FindResource("loginWarning") as string, "stop", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
     }
 

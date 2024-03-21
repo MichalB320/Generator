@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:local="clr-namespace:Generator.Language"
+                    xmlns:system="clr-namespace:System;assembly=netstandard">
+    <!--menu and navigation bar-->
+    <system:String x:Key="file">File</system:String>
+    <system:String x:Key="connect">Connect</system:String>
+    <system:String x:Key="manager">Manager</system:String>
+    <system:String x:Key="dataGrid">DataGrid</system:String>
+    <system:String x:Key="textBox">TextBox</system:String>
+    <system:String x:Key="deleteAll">Delete all</system:String>
+    <system:String x:Key="generator">Generator</system:String>
+    <system:String x:Key="delimiter">Delimiter</system:String>
+    <system:String x:Key="key">Key</system:String>
+    <system:String x:Key="save">Save</system:String>
+    <system:String x:Key="language">Language</system:String>
+    <system:String x:Key="english">English</system:String>
+    <system:String x:Key="slovak">Slovak</system:String>
+    <system:String x:Key="navigation">Navigation bar</system:String>
+
+    <!--ĺoginView-->
+    <system:String x:Key="ldapHeader">LDAP Connect</system:String>
+    <system:String x:Key="domain">Domain: </system:String>
+    <system:String x:Key="user">User: </system:String>
+    <system:String x:Key="password">Password: </system:String>
+
+    <system:String x:Key="loggedIn">Logged In</system:String>
+    <system:String x:Key="IncorrectCredentialsError">The user name or password is incorrect.</system:String>
+    <system:String x:Key="ServerNotOperationalError">The server is not operational.</system:String>
+
+    <!--conditionView-->
+    <system:String x:Key="condition">Condition: </system:String>
+    <system:String x:Key="search">Search</system:String>
+    <system:String x:Key="ldapManual">LDAP filtering manual</system:String>
+
+    <system:String x:Key="loginWarning">You are not connected to LDAP server.</system:String>
+    <system:String x:Key="nothingFound">Nothing found.</system:String>
+    <system:String x:Key="warning">Warning</system:String>
+</ResourceDictionary>

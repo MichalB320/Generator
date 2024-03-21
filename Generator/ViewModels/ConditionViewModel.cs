@@ -23,6 +23,7 @@ public class ConditionViewModel : ObservableObject
         }
     }
     public string Info { get; private set; }
+    public string Alias { get; set; }
     public ICommand SearchCommand { get; set; }
 
     public delegate void CloseWindowEventHandler();
@@ -34,6 +35,7 @@ public class ConditionViewModel : ObservableObject
         _filter = "";
         SearchCommand = new RelayCommand(Search);
         Info = "OK filter";
+        Alias = "";
     }
 
     private void Search()

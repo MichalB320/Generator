@@ -3,7 +3,6 @@ using Generator.Stores;
 
 namespace Generator.Service;
 
-
 public class NavigationService<TViewModel> where TViewModel : ObservableObject
 {
     private readonly NavigationStore _navigationStore;

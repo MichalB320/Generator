@@ -5,28 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Generator" 
         xmlns:views="clr-namespace:Generator.Views"
-        xmlns:vms="clr-namespace:Generator.ViewModels"
+        xmlns:language="clr-namespace:Generator.Language"
+        xmlns:vms="clr-namespace:Generator.ViewModels" xmlns:components="clr-namespace:Generator.Components"
         mc:Ignorable="d"
         Title="Generator" Height="450" Width="800">
-    <Grid>
-        
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Height="auto">
+            <MenuItem Header="{DynamicResource file}">
+                <MenuItem Header="valid"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource connect}">
+                
+            </MenuItem>
+            <MenuItem Header="{DynamicResource manager}">
+                <MenuItem Header="{DynamicResource dataGrid}"/>
+                <MenuItem Header="{DynamicResource textBox}"/>
+                <MenuItem Header="{DynamicResource deleteAll}"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource generator}">
+                <MenuItem Header="{DynamicResource delimiter}"/>
+                <MenuItem Header="{DynamicResource key}"/>
+                <MenuItem Header="{DynamicResource save}"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource language}">
+                <MenuItem Header="{DynamicResource english}" Click="MenuItem_Click"/>
+                <MenuItem Header="{DynamicResource slovak}" Click="OnSlovakClick" />
+            </MenuItem>
+        </Menu>
 
-        <Grid.Resources>
-            <DataTemplate DataType="{x:Type vms:SourcesManagerViewModel}">
-                <views:SourcesManagerView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:GenerateViewModel}">
-                <views:GenerateView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:LoginViewModel}">
-                <views:LoginView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AccountViewModel}">
-                <views:AccountView/>
-            </DataTemplate>
-        </Grid.Resources>
-        <!--<views:SourcesManagerView DataContext="{Binding CurrentViewModel}"/>-->
+        <Grid>
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:SourcesManagerViewModel}">
+                    <views:SourcesManagerView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:GenerateViewModel}">
+                    <views:GenerateView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:LoginViewModel}">
+                    <views:LoginView/>
+                </DataTemplate>
+            </Grid.Resources>
 
-        <ContentControl Content="{Binding CurrentViewModel}"/>
-    </Grid>
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
+    </DockPanel>
 </Window>

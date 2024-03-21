@@ -13,34 +13,6 @@ namespace Generator.Views
             Save.Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        //private void OnPreviousBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        //{
-        //    PreviousPage.Height = 60;
-        //    PreviousPage.Width = 60;
-        //    PreviousPage.Margin = new System.Windows.Thickness(0);
-        //}
-
-        //private void OnPreviousBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        //{
-        //    PreviousPage.Height = 50;
-        //    PreviousPage.Width = 50;
-        //    PreviousPage.Margin = new System.Windows.Thickness(5);
-        //}
-
-        private void OnSaveBtnEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            Save.Height = 60;
-            Save.Width = 60;
-            Save.Margin = new System.Windows.Thickness(0);
-        }
-
-        private void OnSaveBtnLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            Save.Height = 50;
-            Save.Width = 50;
-            Save.Margin = new System.Windows.Thickness(5);
-        }
-
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (output.Text == "")

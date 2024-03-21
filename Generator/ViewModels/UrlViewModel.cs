@@ -2,17 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml.Linq;
 
 namespace Generator.ViewModels;
 
@@ -59,7 +51,7 @@ public class UrlViewModel : ObservableObject
                 foreach (var attribute in htmlNode.Attributes)
                 {
                     string name = attribute.Name;
-                    
+
                     switch (name)
                     {
                         case "width":
@@ -183,9 +175,9 @@ public class UrlViewModel : ObservableObject
                             //if (name == "id" || name == "class" || name == "name" || name == "alt" || name == "placeHolder")
                             //    node.Name = attribute.Value;
 
-    
-    //public string Rel { get; set; }
-    //public string Tag { get; set; }
+
+                            //public string Rel { get; set; }
+                            //public string Tag { get; set; }
                             switch (name)
                             {
                                 case "width":
@@ -209,7 +201,7 @@ public class UrlViewModel : ObservableObject
                                 case "size":
                                     node.Size = attribute.Value;
                                     break;
-                                case "selected": 
+                                case "selected":
                                     node.Selected = attribute.Value;
                                     break;
                                 case "href":

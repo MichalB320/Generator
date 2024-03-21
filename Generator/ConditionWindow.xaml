@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Generator" xmlns:views="clr-namespace:Generator.Views"
         mc:Ignorable="d"
-        Title="ConditionWindow" Height="70" Width="500">
+        Title="ConditionWindow" Height="Auto" Width="750" SizeToContent="Height">
     <Grid>
         <views:ConditionView/>
     </Grid>

@@ -1,4 +1,5 @@
 ﻿using System.DirectoryServices;
+using System.Globalization;
 using System.Windows;
 
 namespace Generator.Models;
@@ -23,7 +24,19 @@ public class Login
 
             _searcher = new DirectorySearcher(_entry);
 
-            info = "Logged in";
+            info = (string)Application.Current.FindResource("loggedIn");
+        }
+        catch (System.DirectoryServices.DirectoryServicesCOMException e)
+        {
+            string errorMessage;
+            if (e.ErrorCode == -2147023570) // -2147023570 je kód chyby pre "The user name or password is incorrect."
+                errorMessage = (string)Application.Current.FindResource("IncorrectCredentialsError");
+            else if (e.ErrorCode == -2147023174) // -2147023174 je kód chyby pre "The server is not operational."
+                errorMessage = (string)Application.Current.FindResource("ServerNotOperationalError");
+            else
+                errorMessage = e.Message;
+
+            info = $"Error: {errorMessage}";
         }
         catch (Exception e)
         {

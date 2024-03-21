@@ -1,6 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Generator.Language;
 using Generator.Models;
+using System.Collections.Generic;
+using System.Resources;
+using System.Runtime.Versioning;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Generator.ViewModels;
@@ -24,7 +29,6 @@ internal class LoginViewModel : ObservableObject
         _is = iss;
         Domain = "LDAP://pegasus.fri.uniza.sk";
         UserInput = "bezo1";
-
         NavigationBarViewModel = navigationBarViewModel;
         ConnectCommand = new RelayCommand(Connect);
 

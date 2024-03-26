@@ -1,5 +1,4 @@
 ﻿using System.DirectoryServices;
-using System.Globalization;
 using System.Windows;
 
 namespace Generator.Models;

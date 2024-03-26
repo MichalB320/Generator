@@ -1,9 +1,4 @@
-﻿using Generator.Language;
-using Generator.Stores;
-using Generator.ViewModels;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Generator
 {

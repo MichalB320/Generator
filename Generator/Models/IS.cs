@@ -34,6 +34,11 @@ public class IS
         _manager.WriteCSV(index);
     }
 
+    public void ClearDataStack()
+    {
+        _manager.Clear();
+    }
+
     public void AddCSV(CSVData csvData) => _manager.AddCSV(csvData);
 
     public void AddSearchResulCollection(SearchResultCollection ldapData) => _manager.AddSearchResultCollection(ldapData);

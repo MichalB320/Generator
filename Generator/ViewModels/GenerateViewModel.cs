@@ -1,8 +1,8 @@
 ﻿using ClassLibrary;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using Generator.Stores;
+using GeneratorApp;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -11,14 +11,15 @@ using System.Windows.Input;
 
 namespace Generator.ViewModels;
 
-internal class GenerateViewModel : ObservableObject
+public class GenerateViewModel : ViewModelBase
 {
     private Mystructure _structure;
     public ICommand GenerateComman { get; set; }
-    //public ICommand PreviousCommand { get; }
     public ICommand SaveCommand { get; }
+    public ICommand DelimiterCommand { get; }
+    public ICommand KeyCommand { get; }
 
-    private string _output;
+    private string _output = string.Empty;
     public string Output { get => _output; set { _output = value; OnPropertyChanged(nameof(Output)); } }
 
     private string _input;
@@ -29,6 +30,9 @@ internal class GenerateViewModel : ObservableObject
 
     private string _ldapKey;
     public string LdapKey { get => _ldapKey; set { _ldapKey = value; OnPropertyChanged(nameof(LdapKey)); } }
+
+    private char _delimiter = '.';
+    public char Delimiter { get => _delimiter; set { _delimiter = value; OnPropertyChanged(nameof(Delimiter)); } }
 
     private int _progresBar;
     public int ProgresBar { get => _progresBar; set { _progresBar = value; OnPropertyChanged(nameof(ProgresBar)); } }
@@ -49,11 +53,9 @@ internal class GenerateViewModel : ObservableObject
         NavigationBarViewModel = navigationBarViewModel;
 
         GenerateComman = new RelayCommand(OnClickGenerate);
-        //PreviousCommand = new RelayCommand(() =>
-        //{
-        //    navigation.CurrentViewModel = new SourcesManagerViewModel(navigation, /*structure, lgi,*/ navigationBarViewModel, iss);
-        //});
         SaveCommand = new RelayCommand(OnClickSave);
+        DelimiterCommand = new RelayCommand(onClickDelimiter);
+        KeyCommand = new RelayCommand(OnClickKey);
 
         _structure = structure;
         _csvKey = "osCislo";
@@ -68,8 +70,34 @@ internal class GenerateViewModel : ObservableObject
         _input = "useradd -c \"$ukazka2.meno$\" -d /home/$ukazka4.meno$ -u $ukazka2.priezvisko$ -m -g $ukazka4.priezvisko$ -s /bin/bash $ukazka2.skupina$\nchmod 701 /home/$ukazka4.skupina$";
 
         _gen = new(_input, ref _structure, _buttons);
-        _output = "";
         //navigationBarViewModel.Visible();
+    }
+
+    private void OnClickKey()
+    {
+        DelimiterWindow deliWin = new()
+        {
+            DataContext = this,
+        };
+        deliWin.ShowDialog();
+    }
+
+    private void onClickDelimiter()
+    {
+        //DelimiterWindow delWin = new()
+        //{
+        //    DataContext = this,
+        //};
+        //delWin.ShowDialog();
+        //string inputValue = Microsoft.VisualBasic.Interaction.InputBox("Zadejte hodnotu:", "Vstupní pole", "");
+        try
+        {
+            Delimiter = Convert.ToChar(Microsoft.VisualBasic.Interaction.InputBox(Application.Current.FindResource("characterEnter") as string, "Enter character", $"{Delimiter}"));
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message);
+        }
     }
 
     private void OnClickSave()
@@ -79,7 +107,6 @@ internal class GenerateViewModel : ObservableObject
         sfd.CheckFileExists = false;
         sfd.CheckPathExists = true;
         sfd.ShowDialog();
-
 
         if (sfd.FileName != "")
         {
@@ -105,13 +132,13 @@ internal class GenerateViewModel : ObservableObject
 
         //Generator.Models.Generator gen = new(Input, _structure, _buttons);
         Generator.Models.Generator gen = new(Input, ref _is.GetStructure(), _is.DynamicButtons/*_is.GetManager().DynamicButtons*/);
-
+        
         ProgresBar = 0;
 
 
         await gen.FindStrings();
         ProgresBar = 10;
-        await gen.FindSourcesAndVariables();
+        await gen.FindSourcesAndVariables(Delimiter);
         ProgresBar = 20;
 
         if (gen.SourcesExists())

@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using System.DirectoryServices;
 using System.Windows;
@@ -7,7 +6,7 @@ using System.Windows.Input;
 
 namespace Generator.ViewModels;
 
-public class ConditionViewModel : ObservableObject
+public class ConditionViewModel : ViewModelBase
 {
     private Login _lgi;
     private SearchResultCollection? _result;

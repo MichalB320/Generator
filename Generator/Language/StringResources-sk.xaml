@@ -36,4 +36,8 @@
     <system:String x:Key="loginWarning">Nie ste pripojný k LDAP serveru.</system:String>
     <system:String x:Key="nothingFound">Nič nebolo nájdené.</system:String>
     <system:String x:Key="warning">Varovanie</system:String>
+
+    <!--generateView-->
+    <system:String x:Key="expression">Výraz: </system:String>
+    <system:String x:Key="characterEnter">Zadajte znak: </system:String>
 </ResourceDictionary>

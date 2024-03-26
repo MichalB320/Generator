@@ -1,5 +1,4 @@
 ﻿using ClassLibrary;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using Microsoft.Win32;
@@ -12,7 +11,7 @@ using System.Windows.Input;
 
 namespace Generator.ViewModels;
 
-public class SourcesManagerViewModel : ObservableObject
+public class SourcesManagerViewModel : ViewModelBase
 {
     private readonly Mystructure _mystructure;
     private readonly IS _is;
@@ -23,6 +22,8 @@ public class SourcesManagerViewModel : ObservableObject
     public ICommand ClickCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand EditCommand { get; }
+
+    public ICommand DeleteAllCommand { get; }
 
     private bool _isReadOnly = true;
     public bool IsReadOnly { get => _isReadOnly; set { _isReadOnly = value; OnPropertyChanged(nameof(IsReadOnly)); } }
@@ -97,7 +98,17 @@ public class SourcesManagerViewModel : ObservableObject
         });
         EVCommand = new RelayCommand(OnClickEVBtn);
         EditCommand = new RelayCommand(OnClickEditBtn);
+        DeleteAllCommand = new RelayCommand(OnClickDeleteAll);
         NavigationBarViewModel = navigationBarViewModel;
+    }
+
+    private void OnClickDeleteAll()
+    {
+        DynamicButtons.Clear();
+        _is.ClearDataStack();
+        _mystructure.Clear();
+        Count = 0;
+        Output = string.Empty;
     }
 
     private void OnClickEditBtn()
@@ -108,7 +119,6 @@ public class SourcesManagerViewModel : ObservableObject
         }
         else
             IsReadOnly = true;
-
     }
 
     private void OnDeleteClick(int index)

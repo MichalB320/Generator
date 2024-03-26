@@ -36,4 +36,8 @@
     <system:String x:Key="loginWarning">You are not connected to LDAP server.</system:String>
     <system:String x:Key="nothingFound">Nothing found.</system:String>
     <system:String x:Key="warning">Warning</system:String>
+    
+    <!--generateView-->
+    <system:String x:Key="expression">Expression: </system:String>
+    <system:String x:Key="characterEnter">Enter a character: </system:String>
 </ResourceDictionary>

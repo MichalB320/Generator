@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using HtmlAgilityPack;
 using System.Collections.ObjectModel;
@@ -8,7 +7,7 @@ using System.Windows.Input;
 
 namespace Generator.ViewModels;
 
-public class UrlViewModel : ObservableObject
+public class UrlViewModel : ViewModelBase
 {
     private HtmlDocument _hmtlDocument;
     public ICommand FindCommand { get; }

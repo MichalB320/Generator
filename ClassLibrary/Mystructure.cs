@@ -59,4 +59,6 @@ public class Mystructure
             yield return _list[i];
         }
     }
+
+    public void Clear() => _list.Clear();
 }

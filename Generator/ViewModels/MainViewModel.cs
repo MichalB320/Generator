@@ -3,7 +3,7 @@ using Generator.Stores;
 
 namespace Generator.ViewModels;
 
-public class MainViewModel : ObservableObject
+public class MainViewModel : ViewModelBase
 {
     private NavigationStore _navigationStore;
     public ObservableObject CurrentViewModel => _navigationStore.CurrentViewModel;

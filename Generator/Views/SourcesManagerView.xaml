@@ -3,18 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Generator.Views" xmlns:components="clr-namespace:Generator.Components"
+             xmlns:local="clr-namespace:Generator.Views" xmlns:components="clr-namespace:Generator.Components" xmlns:components1="clr-namespace:GeneratorApp.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <components:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+        <components1:MenuControl Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
 
-        <Grid Grid.Row="0" Background="White">
+        <components:NavigationBar Grid.Row="2" DataContext="{Binding NavigationBarViewModel}"/>
+
+        <Grid Grid.Row="1" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="auto"/>

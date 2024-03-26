@@ -1,16 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Generator.Language;
+﻿using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
-using System.Collections.Generic;
-using System.Resources;
-using System.Runtime.Versioning;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Generator.ViewModels;
 
-internal class LoginViewModel : ObservableObject
+public class LoginViewModel : ViewModelBase
 {
     private readonly IS _is;
 

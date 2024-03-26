@@ -3,32 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Generator.Views" xmlns:components="clr-namespace:Generator.Components"
+             xmlns:local="clr-namespace:Generator.Views" 
+             xmlns:components="clr-namespace:Generator.Components" xmlns:components1="clr-namespace:GeneratorApp.Components" xmlns:viewmodels="clr-namespace:Generator.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:SourcesManagerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <components:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+        <components1:MenuControl Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
+        
+        <components:NavigationBar Grid.Row="2" DataContext="{Binding NavigationBarViewModel}"/>
 
-        <Grid Grid.Row="0" Background="White">
+        <Grid Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <GroupBox Header="KEY" Grid.Row="0">
+            <!--<GroupBox Header="KEY" Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="CSV: " Margin="10,5,5,5"/>
                     <TextBox Text="{Binding CsvKey, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="0,5,10,5"/>
                     <TextBlock Text="LDAP: " Margin="10,5,5,5"/>
                     <TextBox Text="{Binding LdapKey, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="0,5,10,5"/>
                 </StackPanel>
-            </GroupBox>
+            </GroupBox>-->
 
             <GroupBox Grid.Row="1" Header="WRITE">
                 <Grid Margin="-1,0,1,0">
@@ -44,9 +48,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Name="multi" Height="33" VerticalAlignment="Top" >
-                            expression:
-                        </TextBlock>
+                        <TextBlock Grid.Column="0" Name="multi" Text="{DynamicResource expression}" Height="33" VerticalAlignment="Top" />
                         <TextBox Name="expressionTextBox" Grid.Column="1" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Input}"/>
                     </Grid>
 
@@ -63,7 +65,7 @@
             </GroupBox>
         </Grid>
 
-        <Grid Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <Grid Grid.Row="1" Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <components:CustomButoon x:Name="Save" Image="/Assets/gac_-preservation-512.png" Command="{Binding SaveCommand}" Color="Black"/>
         </Grid>
     </Grid>

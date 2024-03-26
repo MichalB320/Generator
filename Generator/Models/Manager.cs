@@ -64,4 +64,6 @@ public class Manager
     {
         _struct.Add<SearchResultCollection>(ldapData);
     }
+
+    public void Clear() => _struct.Clear();
 }

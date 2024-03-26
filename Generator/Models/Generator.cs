@@ -137,13 +137,13 @@ public class Generator
         });
     }
 
-    public async Task FindSourcesAndVariables()
+    public async Task FindSourcesAndVariables(char delimiter)
     {
         await Task.Run(() =>
         {
             foreach (string str in _strings)
             {
-                string[] parts = str.Split('.');
+                string[] parts = str.Split(delimiter);
                 _sources.Add(parts[0]);
                 _variables.Add(parts[1]);
             }

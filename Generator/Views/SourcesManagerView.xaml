@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Generator.Views" xmlns:components="clr-namespace:Generator.Components" xmlns:components1="clr-namespace:GeneratorApp.Components"
-             xmlns:models="clr-namespace:Generator.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -58,29 +57,7 @@
             </Grid>
 
             <Grid Grid.Column="2" Background="#FF4D4D4D" Margin="0.5">
-                <DataGrid ItemsSource="{Binding DataRows}" Visibility="{Binding DataGridIsVisibility, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                    <DataGrid.Resources>
-                        <!-- Definícia datatemplate pre riadky -->
-                        <DataTemplate DataType="{x:Type models:RowData}">
-                            <ItemsControl ItemsSource="{Binding Columns}">
-                                <ItemsControl.ItemTemplate>
-                                    <!-- Definícia datatemplate pre hodnoty stĺpcov -->
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" Margin="5"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <!-- Určenie orientácie ItemsControl na horizontálnu (pre stĺpce) -->
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </DataTemplate>
-                    </DataGrid.Resources>
-                </DataGrid>
-
-                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged" IsReadOnly="{Binding IsReadOnly}" Visibility="{Binding TextBoxVisibility, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged"/>
             </Grid>
 
             <components:CustomButoon x:Name="Delete" Grid.Column="2" Image="/Assets/delete-100-512.png" Command="{Binding DeleteCommand}" Color="Red" Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>

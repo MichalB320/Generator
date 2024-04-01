@@ -34,26 +34,27 @@ public class Manager
 
         StringBuilder sb = new();
 
-        foreach (SearchResult result in results)
-        {
-            foreach (string propertyName in result.Properties.PropertyNames)
-                sb.Append($"{propertyName};");
-        }
+        //foreach (SearchResult result in results)
+        //{
+        //    foreach (string propertyName in result.Properties.PropertyNames)
+        //        sb.Append($"{propertyName};");
+        //}
+
+        //foreach (SearchResult result in results)
+        //{
+        //    await Task.Run(() =>
+        //    {
+        //        foreach (string propertyName in result.Properties.PropertyNames)
+        //        {
+        //            foreach (var propertyValue in result.Properties[propertyName])
+        //                sb.Append($"{propertyValue};");
+        //        }
+        //        sb.Append("\n");
+        //    });
+        //}
 
         foreach (SearchResult result in results)
-        {
-            await Task.Run(() =>
-            {
-                foreach (string propertyName in result.Properties.PropertyNames)
-                {
-                    foreach (var propertyValue in result.Properties[propertyName])
-                        sb.Append($"{propertyValue};");
-                }
-                sb.Append("\n");
-            });
-        }
-
-        //    await Task.Run(() => sb.Append(result.Properties["cn"][0] + "\n"));
+            await Task.Run(() => sb.Append(result.Properties["cn"][0] + "\n"));
 
         return sb.ToString();
     }

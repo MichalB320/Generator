@@ -19,44 +19,25 @@ public class NavigationBarViewModel : ViewModelBase
     public LoginViewModel LoginViewModel { get; }
     public SourcesManagerViewModel SourcesManagerViewModel { get; }
     public GenerateViewModel GenerateViewModel { get; }
-    private string _lang;
+    private ResourceDictionary _resourceDictionary;
 
     public NavigationBarViewModel(NavigationStore navigator, IS iss)
     {
         IS isk = iss;
         Mystructure structure = new();
-        Login lgi = new();
 
-        LoginViewModel loginVM = new(this, isk); ;
+        LoginViewModel loginVM = new(this, isk);
         SourcesManagerViewModel scManagerVM = new(this, isk);
-        GenerateViewModel GenerateVM = new(structure, new System.Collections.ObjectModel.ObservableCollection<ButtonViewModel>(), navigator, this, lgi, isk);
+        GenerateViewModel GenerateVM = new(this, isk);
 
-        _lang = "en";
+        _resourceDictionary = new ResourceDictionary();
 
-        NavigateLoginCommand = new RelayCommand(() =>
-        {
-            navigator.CurrentViewModel = loginVM;
-            if (_lang == "en")
-                SwitchLanguage("en");
-            else if (_lang == "sk")
-                SwitchLanguage("sk");
-        });
-        NavigateManagerCommand = new RelayCommand(() =>
-        {
-            navigator.CurrentViewModel = scManagerVM;
-            if (_lang == "en")
-                SwitchLanguage("en");
-            else if (_lang == "sk")
-                SwitchLanguage("sk");
-        });
+        NavigateLoginCommand = new RelayCommand(() => navigator.CurrentViewModel = loginVM);
+        NavigateManagerCommand = new RelayCommand(() => navigator.CurrentViewModel = scManagerVM);
         NavigateGeneratorCommand = new RelayCommand(() =>
         {
             var novy = isk;
             navigator.CurrentViewModel = GenerateVM;
-            if (_lang == "en")
-                SwitchLanguage("en");
-            else if (_lang == "sk")
-                SwitchLanguage("sk");
         });
         SlovakCommand = new RelayCommand(() => SwitchLanguage("sk"));
         EnglishCommand = new RelayCommand(() => SwitchLanguage("en"));
@@ -69,19 +50,11 @@ public class NavigationBarViewModel : ViewModelBase
 
     private void SwitchLanguage(string lang)
     {
-        ResourceDictionary dictionary = new ResourceDictionary();
-
         if (lang == "en")
-        {
-            dictionary.Source = new Uri("\\Language\\StringResources-en.xaml", UriKind.Relative);
-            _lang = "en";
-        }
+            _resourceDictionary.Source = new Uri("\\Language\\StringResources-en.xaml", UriKind.Relative);
         else if (lang == "sk")
-        {
-            dictionary.Source = new Uri("\\Language\\StringResources-sk.xaml", UriKind.Relative);
-            _lang = "sk";
-        }
+            _resourceDictionary.Source = new Uri("\\Language\\StringResources-sk.xaml", UriKind.Relative);
 
-        Application.Current.Resources.MergedDictionaries.Add(dictionary);
+        Application.Current.Resources.MergedDictionaries.Add(_resourceDictionary);
     }
 }

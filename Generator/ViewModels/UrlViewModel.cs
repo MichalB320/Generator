@@ -20,6 +20,7 @@ public class UrlViewModel : ViewModelBase
     private string _webData;
     public string WebData { get => _webData; set { _webData = value; OnPropertyChanged(nameof(WebData)); } }
     public string UrlInput { get; set; }
+    public string Alias { get; set; }
 
     public List<List<string>> csv { get; set; }
 
@@ -33,6 +34,7 @@ public class UrlViewModel : ViewModelBase
         People = new();
         _original = new();
         FilterCommand = new RelayCommand(OnClickFilter);
+        Alias = string.Empty;
         //csv = new();
     }
 
@@ -123,7 +125,7 @@ public class UrlViewModel : ViewModelBase
     private void OnCliclOk()
     {
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public async void OnClickFind()

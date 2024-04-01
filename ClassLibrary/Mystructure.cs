@@ -2,7 +2,7 @@
 
 namespace ClassLibrary;
 
-public class Mystructure
+public class Mystructure //TODO: T nad triedou
 {
     private readonly List<object> _list;
     public int Count { get => _list.Count; }

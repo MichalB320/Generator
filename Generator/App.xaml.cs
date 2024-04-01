@@ -1,6 +1,7 @@
 ﻿using Generator.Models;
 using Generator.Stores;
 using Generator.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace Generator;
@@ -17,8 +18,6 @@ public partial class App : Application
 
     public App()
     {
-
-
         _is = new IS();
 
         _navigationStore = new NavigationStore();

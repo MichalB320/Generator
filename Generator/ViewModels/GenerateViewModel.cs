@@ -1,10 +1,7 @@
-﻿using ClassLibrary;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
-using Generator.Stores;
 using GeneratorApp;
 using Microsoft.Win32;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -13,7 +10,6 @@ namespace Generator.ViewModels;
 
 public class GenerateViewModel : ViewModelBase
 {
-    private Mystructure _structure;
     public ICommand GenerateComman { get; set; }
     public ICommand SaveCommand { get; }
     public ICommand DelimiterCommand { get; }
@@ -39,17 +35,11 @@ public class GenerateViewModel : ViewModelBase
 
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
-    private List<string> _zdroje;
-    private ObservableCollection<ButtonViewModel> _buttons;
-
-    private Generator.Models.Generator _gen;
     private IS _is;
 
-    public GenerateViewModel(Mystructure structure, ObservableCollection<ButtonViewModel> buttons, NavigationStore navigation, NavigationBarViewModel navigationBarViewModel, Login lgi, IS iss)
+    public GenerateViewModel(NavigationBarViewModel navigationBarViewModel, IS iss)
     {
         _is = iss;
-        _zdroje = new();
-        _buttons = buttons;
         NavigationBarViewModel = navigationBarViewModel;
 
         GenerateComman = new RelayCommand(OnClickGenerate);
@@ -57,20 +47,11 @@ public class GenerateViewModel : ViewModelBase
         DelimiterCommand = new RelayCommand(onClickDelimiter);
         KeyCommand = new RelayCommand(OnClickKey);
 
-        _structure = structure;
         _csvKey = "osCislo";
         _ldapKey = "uidNumber";
 
-        //CSVData csv = structure.GetItem<CSVData>(0);
-
-        //_output = $"{csv.Count}";
-
-
         //_input = "useradd -c \"$displayName$\" -d /home/$uid$ -u $uidNumber$ -m -g $gidNumber$ -s /bin/bash $uid$\nchmod 701 /home/$uid$";
         _input = "useradd -c \"$ukazka2.meno$\" -d /home/$ukazka4.meno$ -u $ukazka2.priezvisko$ -m -g $ukazka4.priezvisko$ -s /bin/bash $ukazka2.skupina$\nchmod 701 /home/$ukazka4.skupina$";
-
-        _gen = new(_input, ref _structure, _buttons);
-        //navigationBarViewModel.Visible();
     }
 
     private void OnClickKey()
@@ -131,7 +112,7 @@ public class GenerateViewModel : ViewModelBase
         //await Task.Run(() => Gen(progress));
 
         //Generator.Models.Generator gen = new(Input, _structure, _buttons);
-        Generator.Models.Generator gen = new(Input, ref _is.GetStructure(), _is.DynamicButtons/*_is.GetManager().DynamicButtons*/);
+        Generator.Models.Generator gen = new(Input, ref _is.GetStructure(), _is.DynamicButtons);
         
         ProgresBar = 0;
 

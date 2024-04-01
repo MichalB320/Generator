@@ -33,8 +33,27 @@ public class Manager
         SearchResultCollection results = _struct.GetItem<SearchResultCollection>(index);
 
         StringBuilder sb = new();
+
         foreach (SearchResult result in results)
-            await Task.Run(() => sb.Append(result.Properties["cn"][0] + "\n"));
+        {
+            foreach (string propertyName in result.Properties.PropertyNames)
+                sb.Append($"{propertyName};");
+        }
+
+        foreach (SearchResult result in results)
+        {
+            await Task.Run(() =>
+            {
+                foreach (string propertyName in result.Properties.PropertyNames)
+                {
+                    foreach (var propertyValue in result.Properties[propertyName])
+                        sb.Append($"{propertyValue};");
+                }
+                sb.Append("\n");
+            });
+        }
+
+        //    await Task.Run(() => sb.Append(result.Properties["cn"][0] + "\n"));
 
         return sb.ToString();
     }

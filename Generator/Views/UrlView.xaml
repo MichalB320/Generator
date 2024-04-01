@@ -22,15 +22,15 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="URL: "/>
-            <TextBox Grid.Column="1" Text="{Binding UrlInput}"/>
+            <TextBlock Grid.Column="0" Text="URL: " Margin="5"/>
+            <TextBox Grid.Column="1" Text="{Binding UrlInput}" Margin="5"/>
 
-            <Button Grid.Column="2" Content="FIND" Command="{Binding FindCommand}"/>
+            <Button Grid.Column="2" Content="FIND" Command="{Binding FindCommand}" Width="80" Margin="5"/>
         </Grid>
 
         
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WebData}"/>
-        <Button Grid.Row="2" Content="Filter" Command="{Binding FilterCommand}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WebData}" Margin="5"/>
+        <Button Grid.Row="2" Content="Filter" Command="{Binding FilterCommand}" Margin="5"/>
 
         <DataGrid x:Name="Grid" Grid.Row="3" ItemsSource="{Binding People}" MaxColumnWidth="500">
             <!--<DataGrid.Columns>
@@ -44,8 +44,16 @@
             
         </DataGrid>
 
-        <Button Grid.Row="4" Content="OK" Command="{Binding OkCommand}"/>
-        
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
 
+            <TextBlock Grid.Column="0" Text="Alias: " Margin="5"/>
+            <TextBox Grid.Column="1" Text="{Binding Alias}" Margin="5"/>
+            <Button Grid.Column="2" Content="OK" Command="{Binding OkCommand}" Width="80" Margin="5"/>
+        </Grid>
     </Grid>
 </UserControl>

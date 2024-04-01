@@ -1,6 +1,7 @@
 ﻿using ClassLibrary;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
+using GeneratorApp.Models;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
@@ -22,11 +23,19 @@ public class SourcesManagerViewModel : ViewModelBase
     public ICommand ClickCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand EditCommand { get; }
+    public ICommand ShowDataGridCommand { get; }
+    public ICommand ShowTextBoxCommand { get; }
 
     public ICommand DeleteAllCommand { get; }
 
     private bool _isReadOnly = true;
     public bool IsReadOnly { get => _isReadOnly; set { _isReadOnly = value; OnPropertyChanged(nameof(IsReadOnly)); } }
+    private Visibility _textBoxVisibility;
+    public Visibility TextBoxVisibility { get => _textBoxVisibility; set { _textBoxVisibility = value; OnPropertyChanged(nameof(TextBoxVisibility)); } }
+    private Visibility _dataGridVisibility;
+    public Visibility DataGridIsVisibility { get => _dataGridVisibility; set { _dataGridVisibility = value; OnPropertyChanged(nameof(DataGridIsVisibility)); } }
+    public ObservableCollection<CSVData> Data { get; set; } = new ObservableCollection<CSVData>();
+    public ObservableCollection<RowData> DataRows { get; set; } 
 
     private string _output;
     public string Output { get => _output; set { _output = value; OnPropertyChanged(nameof(Output)); } }
@@ -54,7 +63,17 @@ public class SourcesManagerViewModel : ViewModelBase
         _output = "";
         _count = 0;
 
+        DataRows = new ObservableCollection<RowData>
+        {
+            new RowData(new List<string>{"A1", "B1", "C1"}),
+            new RowData(new List<string>{"A2", "B2", "C2"}),
+            new RowData(new List<string>{"A3", "B3", "C3"}),
+        };
+
         _mystructure = new Mystructure();
+
+        //CSVData da = new();
+        //var nieco = da.GetRow(0)[1];
 
         LdapCommand = new RelayCommand(OnClickLdapBtn);
         CsvCommand = new RelayCommand(OnClickCsvBtn);
@@ -99,7 +118,25 @@ public class SourcesManagerViewModel : ViewModelBase
         EVCommand = new RelayCommand(OnClickEVBtn);
         EditCommand = new RelayCommand(OnClickEditBtn);
         DeleteAllCommand = new RelayCommand(OnClickDeleteAll);
+        ShowDataGridCommand = new RelayCommand(OnClickDataGrid);
+        ShowTextBoxCommand = new RelayCommand(OnClickTextBox);
         NavigationBarViewModel = navigationBarViewModel;
+        TextBoxVisibility = Visibility.Visible;
+        DataGridIsVisibility = Visibility.Collapsed;
+    }
+
+    private void OnClickTextBox()
+    {
+        //MessageBox.Show("textBox");
+        TextBoxVisibility = Visibility.Visible;
+        DataGridIsVisibility = Visibility.Collapsed;
+    }
+
+    private void OnClickDataGrid()
+    {
+        //MessageBox.Show("DataGrid");
+        TextBoxVisibility = Visibility.Collapsed;
+        DataGridIsVisibility = Visibility.Visible;
     }
 
     private void OnClickDeleteAll()
@@ -178,7 +215,7 @@ public class SourcesManagerViewModel : ViewModelBase
         CSVData csv = new(urlVM.csv);
         _is.AddCSV(csv);
         Count++;
-        string name = "predmety";
+        string name = urlVM.Alias;//"predmety";
         AddButtonToStack(name, typeof(CSVData));
         //------
         _mystructure.Add<CSVData>(csv);
@@ -233,6 +270,8 @@ public class SourcesManagerViewModel : ViewModelBase
     {
         string output = await _is.WriteLDAP(index); //_manager.WriteLDAP(index);
         Output = output;
+
+        
     }
 
     private void OnClickButton(int index) //=> this.Output = _manager.WriteCSV(index);
@@ -249,6 +288,8 @@ public class SourcesManagerViewModel : ViewModelBase
         }
 
         Output = sb.ToString();
+        
+        Data.Add(_mystructure.GetItem<CSVData>(index));
     }
 
     private void AddButtonToStack(string content, Type type) => DynamicButtons.Add(new ButtonViewModel(content, ClickCommand, DynamicButtons.Count, type));

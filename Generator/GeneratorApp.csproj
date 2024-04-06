@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\csvObrazok.png" />
     <Resource Include="Assets\delete-100-512.png" />
     <Resource Include="Assets\gac_-preservation-512.png" />

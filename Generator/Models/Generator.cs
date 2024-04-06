@@ -172,7 +172,7 @@ public class Generator
         {
             foreach (string str in _strings)
             {
-                if (str.Contains(delimiter))
+                if (str.Contains(delimiter) && str.Count(c => c == delimiter) == 1)
                 {
                     string[] parts = str.Split(delimiter);
                     _sources.Add(parts[0]);

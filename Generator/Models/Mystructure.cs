@@ -1,5 +1,7 @@
 ﻿//using ClassLibrary;
-using System.DirectoryServices.Protocols;
+//using System.DirectoryServices.Protocols;
+
+using System.DirectoryServices;
 
 namespace Generator.Models;
 
@@ -44,7 +46,7 @@ public class Mystructure //TODO: T nad triedou
         }
         else
         {
-            return typeof(SearchResultReferenceCollection);
+            return typeof(SearchResultCollection);
         }
 
     }

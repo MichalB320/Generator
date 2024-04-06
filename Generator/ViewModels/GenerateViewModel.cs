@@ -12,6 +12,7 @@ public class GenerateViewModel : ViewModelBase
 {
     public ICommand GenerateComman { get; set; }
     public ICommand SaveCommand { get; }
+    public ICommand SpecialChar { get; }
     public ICommand DelimiterCommand { get; }
     public ICommand KeyCommand { get; }
 
@@ -33,6 +34,8 @@ public class GenerateViewModel : ViewModelBase
     private int _progresBar;
     public int ProgresBar { get => _progresBar; set { _progresBar = value; OnPropertyChanged(nameof(ProgresBar)); } }
 
+    private char _specialChar = '$';
+    public char SpeciaChar { get => _specialChar; set { _specialChar = value; OnPropertyChanged(nameof(SpeciaChar)); } }
     public NavigationBarViewModel NavigationBarViewModel { get; }
 
     private IS _is;
@@ -44,6 +47,7 @@ public class GenerateViewModel : ViewModelBase
 
         GenerateComman = new RelayCommand(OnClickGenerate);
         SaveCommand = new RelayCommand(OnClickSave);
+        SpecialChar = new RelayCommand(onClickSpecialChar);
         DelimiterCommand = new RelayCommand(onClickDelimiter);
         KeyCommand = new RelayCommand(OnClickKey);
 
@@ -52,6 +56,18 @@ public class GenerateViewModel : ViewModelBase
 
         //_input = "useradd -c \"$displayName$\" -d /home/$uid$ -u $uidNumber$ -m -g $gidNumber$ -s /bin/bash $uid$\nchmod 701 /home/$uid$";
         _input = "useradd -c \"$ukazka2.meno$\" -d /home/$ukazka4.meno$ -u $ukazka2.priezvisko$ -m -g $ukazka4.priezvisko$ -s /bin/bash $ukazka2.skupina$\nchmod 701 /home/$ukazka4.skupina$";
+    }
+
+    private void onClickSpecialChar()
+    {
+        try
+        {
+            SpeciaChar = Convert.ToChar(Microsoft.VisualBasic.Interaction.InputBox(Application.Current.FindResource("characterEnterAsSpecial") as string, "Enter character", $"{SpeciaChar}"));
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message);
+        }
     }
 
     private void OnClickKey()
@@ -73,7 +89,7 @@ public class GenerateViewModel : ViewModelBase
         //string inputValue = Microsoft.VisualBasic.Interaction.InputBox("Zadejte hodnotu:", "Vstupní pole", "");
         try
         {
-            Delimiter = Convert.ToChar(Microsoft.VisualBasic.Interaction.InputBox(Application.Current.FindResource("characterEnter") as string, "Enter character", $"{Delimiter}"));
+            Delimiter = Convert.ToChar(Microsoft.VisualBasic.Interaction.InputBox(Application.Current.FindResource("characterEnterAsDeliminer") as string, "Enter character", $"{Delimiter}"));
         }
         catch (Exception e)
         {
@@ -122,7 +138,7 @@ public class GenerateViewModel : ViewModelBase
             ProgresBar = 0;
 
 
-            await gen.FindStrings();
+            await gen.FindStrings(SpeciaChar);
             ProgresBar = 10;
             await gen.FindSourcesAndVariables(Delimiter);
             ProgresBar = 20;
@@ -135,7 +151,7 @@ public class GenerateViewModel : ViewModelBase
                 ProgresBar = 80;
 
                 //gen.JoinOn("osCislo", "uidNumber");
-                string output = gen.Generate();
+                string output = gen.Generate(SpeciaChar);
                 ProgresBar = 95;
                 Output = output;
                 ProgresBar = 100;

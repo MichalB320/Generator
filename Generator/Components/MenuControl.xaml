@@ -19,6 +19,7 @@
             <MenuItem Header="{DynamicResource deleteAll}" Command="{Binding DeleteAllCommand}"/>
         </MenuItem>
         <MenuItem Header="{DynamicResource generator}" DataContext="{Binding GenerateViewModel}">
+            <MenuItem Header="{DynamicResource char}" Command="{Binding SpecialChar}"/>
             <MenuItem Header="{DynamicResource delimiter}" Command="{Binding DelimiterCommand}"/>
             <MenuItem Header="{DynamicResource key}" Command="{Binding KeyCommand}"/>
             <MenuItem Header="{DynamicResource save}" Command="{Binding SaveCommand}"/>

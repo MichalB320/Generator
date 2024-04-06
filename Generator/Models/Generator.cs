@@ -61,7 +61,7 @@ public class Generator
         _csvSIndexes.Clear();
     }
 
-    public string Generate()
+    public string Generate(char specialChar)
     {
         string input = _input;
 
@@ -74,7 +74,7 @@ public class Generator
                 for (int i = 0; i < _strings.Count; i++)
                     text = text.Replace(_strings[i], _pole[i][j]);
 
-                text = text.Replace("$", "");
+                text = text.Replace(Convert.ToString(specialChar), "");
                 sb.Append($"{text}\n");
             }
         }
@@ -145,21 +145,21 @@ public class Generator
         }
     }
 
-    public async Task FindStrings()
+    public async Task FindStrings(char specialChar)
     {
         await Task.Run(() =>
         {
-            int startI = _input.IndexOf('$');
-            int count = _input.Count(c => c == '$');
+            int startI = _input.IndexOf(specialChar);
+            int count = _input.Count(c => c == specialChar);
 
-            if (count % 2 != 0)
+            if (count % 2 != 0 || startI == -1)
                 throw new Exception(Application.Current.FindResource("specialChar") as string);
 
             for (int i = 0; i < count / 2; i++)
             {
                 int startIndex = startI;
-                int endIndex = _input.IndexOf('$', startIndex + 1);
-                startI = _input.IndexOf('$', endIndex + 1);
+                int endIndex = _input.IndexOf(specialChar, startIndex + 1);
+                startI = _input.IndexOf(specialChar, endIndex + 1);
                 string subStr = _input.Substring(startIndex + 1, endIndex - 1 - startIndex);
                 _strings.Add(subStr);
             }

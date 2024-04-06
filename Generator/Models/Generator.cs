@@ -1,5 +1,4 @@
-﻿using ClassLibrary;
-using Generator.ViewModels;
+﻿using Generator.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
@@ -22,17 +21,44 @@ public class Generator
 
     private List<CSVData> _csvS;
 
-    public Generator(string input, ref Mystructure structure, ObservableCollection<ButtonViewModel> buttons)
+    private Dictionary<string, int> _csvSIndexes;
+
+    public Generator(string input, Mystructure structure, ObservableCollection<ButtonViewModel> buttons)
     {
         _input = input;
         _strings = new();
         _variables = new();
         _sources = new();
         _structure = structure;
+        //_structure = new(); 
+        //for (int i = 0; i < structure.Count; i++)
+        //{
+        //    if (structure.GetTypeOf(i) == typeof(CSVData))
+        //    {
+        //        _structure.Add<CSVData>(structure.GetItem<CSVData>(i));
+        //    }
+        //    else
+        //    {
+        //        _structure.Add<SearchResultCollection>(structure.GetItem<SearchResultCollection>(i));
+        //    }
+
+        //}
         _buttons = buttons;
 
         _stlpce = new();
         _csvS = new();
+        _csvSIndexes = new();
+    }
+
+    public void setValues(string input, ObservableCollection<ButtonViewModel> buttons)
+    {
+        _input = input;
+        _buttons = buttons;
+        _strings.Clear();
+        _variables.Clear();
+        _sources.Clear();
+        _csvS.Clear();
+        _csvSIndexes.Clear();
     }
 
     public string Generate()
@@ -92,13 +118,15 @@ public class Generator
                 if (_buttons[index].Type == typeof(CSVData))
                 {
                     //CSVData csv = _structure.GetItem<CSVData>(index);
-                    CSVData csv = _csvS[index];
+                    int csvSIndex = _csvSIndexes[_buttons[index].Content];
+                    CSVData csv = _csvS[csvSIndex]; // pada because of _csvS[index];
                     stlpce.Add(csv);
                 }
                 if (_buttons[index].Type == typeof(SearchResultCollection))
                 {
                     //SearchResultCollection ldap = _structure.GetItem<SearchResultCollection>(index);
-                    CSVData csv = _csvS[index];
+                    int csvSIndex = _csvSIndexes[_buttons[index].Content];
+                    CSVData csv = _csvS[csvSIndex]; // pada because of _csvS[index];
                     //stlpce.Add(ldap);
 
                     stlpce.Add(csv);
@@ -121,10 +149,11 @@ public class Generator
     {
         await Task.Run(() =>
         {
-
             int startI = _input.IndexOf('$');
             int count = _input.Count(c => c == '$');
 
+            if (count % 2 != 0)
+                throw new Exception(Application.Current.FindResource("specialChar") as string);
 
             for (int i = 0; i < count / 2; i++)
             {
@@ -143,9 +172,14 @@ public class Generator
         {
             foreach (string str in _strings)
             {
-                string[] parts = str.Split(delimiter);
-                _sources.Add(parts[0]);
-                _variables.Add(parts[1]);
+                if (str.Contains(delimiter))
+                {
+                    string[] parts = str.Split(delimiter);
+                    _sources.Add(parts[0]);
+                    _variables.Add(parts[1]);
+                }
+                else
+                    throw new Exception(Application.Current.FindResource("deliminerChar") as string);
             }
         });
     }
@@ -208,6 +242,18 @@ public class Generator
         _pole = matrix;
     }
 
+    public static bool ObsahujeStringy(List<string> list, ButtonViewModel button)
+    {
+        foreach (var item in list)
+        {
+            if (button.Content == item)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public async Task JoinOn(string csvKey, string ldapKey, IProgress<int> proggres)
     {
         List<SearchResultCollection> ldapS = new();
@@ -217,16 +263,14 @@ public class Generator
         for (int i = 0; i < _structure.Count; i++)
         {
             proggres.Report(value);
-            if (_structure.GetTypeOf(i) == typeof(CSVData))
+            if (_structure.GetTypeOf(i) == typeof(CSVData) && ObsahujeStringy(_sources, _buttons[i]))
             {
-                CSVData subor = _structure.GetItem<CSVData>(i);
+                CSVData subor = _structure.GetItem<CSVData>(i).DeepCopy();
                 csvS.Add(subor);
+                _csvSIndexes.Add(_buttons[i].Content, csvS.IndexOf(subor));
             }
-            else if (_structure.GetTypeOf(i) != typeof(CSVData))
+            else if (_structure.GetTypeOf(i) != typeof(CSVData) && ObsahujeStringy(_sources, _buttons[i]))
             {
-                //SearchResultCollection results = _structure.GetItem<SearchResultCollection>(i);
-                //ldapS.Add(results);
-
                 SearchResultCollection ldap = _structure.GetItem<SearchResultCollection>(i);
 
                 CSVData csv = new();
@@ -259,11 +303,11 @@ public class Generator
                 }
 
                 csvS.Add(csv);
+                _csvSIndexes.Add(_buttons[i].Content, csvS.IndexOf(csv));
             }
             value += 10;
         }
 
-        //List<string> kluce = new();
         string[][] kluce = new string[csvS.Count][];
 
         // 1 krok a 2 krok
@@ -275,20 +319,16 @@ public class Generator
             {
                 int indexCsvStlpca;
                 if (csv.GetRow(0).Contains(csvKey))
-                {
                     indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
-                }
                 else
-                {
                     indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
-                }
 
-                string kluc; // = csv.GetRow(i)[indexCsvStlpca];//[stlpecCSV]
+                string kluc;
 
                 if (indexCsvStlpca > csv.GetRow(i).Count || indexCsvStlpca < 0)
                     kluc = "";
                 else
-                    kluc = csv.GetRow(i)[indexCsvStlpca];//[stlpecCSV]
+                    kluc = csv.GetRow(i)[indexCsvStlpca];
 
                 kluce[index][i - 1] = kluc;
             }
@@ -296,63 +336,61 @@ public class Generator
         }
 
         // krok 3
-        List<string> spolocnePole = NajdiSpolocnePrvky(kluce);
-
-
-        // krok 4 a krok 5
-        foreach (var csv in csvS)
+        if (csvS.Count > 1)
         {
-            for (int i = csv.Count - 1; i > 0; i--)
+            List<string> spolocnePole = NajdiSpolocnePrvky(kluce);
+
+            // krok 4 a krok 5
+            foreach (var csv in csvS)
             {
-                int indexCsvStlpca;
-                if (csv.GetRow(0).Contains(csvKey))
+                for (int i = csv.Count - 1; i > 0; i--)
                 {
-                    indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
+                    int indexCsvStlpca;
+                    if (csv.GetRow(0).Contains(csvKey))
+                        indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
+                    else
+                        indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
+
+                    if (indexCsvStlpca > csv.GetRow(i).Count || indexCsvStlpca < 0)
+                        csv.RemoveRow(i);
+                    else if (!spolocnePole.Contains(csv.GetRow(i)[indexCsvStlpca]))
+                        csv.RemoveRow(i);
                 }
-                else
-                {
+            }
+
+
+            // krok 6 a krok 7
+            List<CSVData> csvS2 = new();
+            foreach (CSVData csv in csvS)
+            {
+                List<List<string>> polePoli = csv.GetRows();
+
+                int indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
+
+                if (csv.GetRow(0).Contains(ldapKey))
                     indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
-                }
-
-                if (indexCsvStlpca > csv.GetRow(i).Count || indexCsvStlpca < 0)
+                else
+                    indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
+                try
                 {
-                    csv.RemoveRow(i);
+                    polePoli = polePoli.Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
                 }
-                else if (!spolocnePole.Contains(csv.GetRow(i)[indexCsvStlpca]))
+                catch (Exception e)
                 {
-                    csv.RemoveRow(i);
+                    MessageBox.Show(e.Message);
                 }
-
+                polePoli.Insert(0, csv.GetRow(0));
+                CSVData newCsv = new(polePoli);
+                csvS2.Add(newCsv);
             }
-        }
 
-        // krok 6 a krok 7
-        List<CSVData> csvS2 = new();
-        foreach (CSVData csv in csvS)
+            //_csvS = csvS;
+            _csvS = csvS2;
+        }
+        else
         {
-            List<List<string>> polePoli = csv.GetRows();
-
-            int indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
-
-            if (csv.GetRow(0).Contains(ldapKey))
-                indexCsvStlpca = csv.GetRow(0).IndexOf(ldapKey);
-            else
-                indexCsvStlpca = csv.GetRow(0).IndexOf(csvKey);
-            try
-            {
-                polePoli = polePoli.Skip(1).OrderBy(list => int.Parse(list[indexCsvStlpca])).ToList();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            polePoli.Insert(0, csv.GetRow(0));
-            CSVData newCsv = new(polePoli);
-            csvS2.Add(newCsv);
+            _csvS = csvS;
         }
-
-        //_csvS = csvS;
-        _csvS = csvS2;
     }
 
     static List<string> NajdiSpolocnePrvky(string[][] pole)

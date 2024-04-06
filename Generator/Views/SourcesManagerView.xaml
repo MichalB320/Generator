@@ -57,7 +57,7 @@
             </Grid>
 
             <Grid Grid.Column="2" Background="#FF4D4D4D" Margin="0.5">
-                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged"/>
+                <TextBox Name="ukazka" Background="#FF4D4D4D" Foreground="White" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="OnTextChanged" IsReadOnly="True"/>
             </Grid>
 
             <components:CustomButoon x:Name="Delete" Grid.Column="2" Image="/Assets/delete-100-512.png" Command="{Binding DeleteCommand}" Color="Red" Margin="0,0,30,9" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>

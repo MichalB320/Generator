@@ -25,24 +25,13 @@
             <TextBlock Grid.Column="0" Text="URL: " Margin="5"/>
             <TextBox Grid.Column="1" Text="{Binding UrlInput}" Margin="5"/>
 
-            <Button Grid.Column="2" Content="FIND" Command="{Binding FindCommand}" Width="80" Margin="5"/>
+            <Button Grid.Column="2" Content="FIND" Command="{Binding FindCommand}"  Width="80" Margin="5" Cursor="Hand"/>
         </Grid>
 
-        
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WebData}" Margin="5"/>
-        <Button Grid.Row="2" Content="Filter" Command="{Binding FilterCommand}" Margin="5"/>
+        <Button Grid.Row="2" Content="Filter" Command="{Binding FilterCommand}" IsEnabled="{Binding FilterIsEnabled}" Margin="5" Cursor="Hand"/>
 
-        <DataGrid x:Name="Grid" Grid.Row="3" ItemsSource="{Binding People}" MaxColumnWidth="500">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="tag" Binding="{Binding Tag}"/>
-                <DataGridTextColumn Header="id" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="class" Binding="{Binding Class}"/>
-                <DataGridTextColumn Header="name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="alt"/>
-                <DataGridTextColumn Header="placeHolder"/>
-            </DataGrid.Columns>-->
-            
-        </DataGrid>
+        <DataGrid x:Name="Grid" Grid.Row="3" ItemsSource="{Binding Nodes}" MaxColumnWidth="500"/>
 
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>

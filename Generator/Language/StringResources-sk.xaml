@@ -28,6 +28,9 @@
     <system:String x:Key="IncorrectCredentialsError">Nesprávne prihlasovacie údaje.</system:String>
     <system:String x:Key="ServerNotOperationalError">Server nie je k dispozícií.</system:String>
 
+    <!--sourcesManager-->
+    <system:String x:Key="fileException">Zakázany prístup k súboru pretože je používaný iným procesom.</system:String>
+
     <!--conditionView-->
     <system:String x:Key="condition">Podmienka: </system:String>
     <system:String x:Key="search">Vyhľadaj</system:String>
@@ -40,4 +43,9 @@
     <!--generateView-->
     <system:String x:Key="expression">Výraz: </system:String>
     <system:String x:Key="characterEnter">Zadajte znak: </system:String>
+    <system:String x:Key="specialChar">Nesprávny počet špecialnych znakov</system:String>
+    <system:String x:Key="deliminerChar">Použitý nesprávny oddeľovač.</system:String>
+
+    <!--urlView-->
+    <system:String x:Key="emptyAlias">Prázdny Alias</system:String>
 </ResourceDictionary>

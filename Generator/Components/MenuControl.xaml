@@ -14,8 +14,8 @@
 
         </MenuItem>
         <MenuItem Header="{DynamicResource manager}" DataContext="{Binding SourcesManagerViewModel}">
-            <MenuItem Header="{DynamicResource dataGrid}" Command="{Binding ShowDataGridCommand}"/>
-            <MenuItem Header="{DynamicResource textBox}" Command="{Binding ShowTextBoxCommand}"/>
+            <MenuItem Header="{DynamicResource dataGrid}"/>
+            <MenuItem Header="{DynamicResource textBox}" />
             <MenuItem Header="{DynamicResource deleteAll}" Command="{Binding DeleteAllCommand}"/>
         </MenuItem>
         <MenuItem Header="{DynamicResource generator}" DataContext="{Binding GenerateViewModel}">

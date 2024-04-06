@@ -112,28 +112,38 @@ public class GenerateViewModel : ViewModelBase
         //await Task.Run(() => Gen(progress));
 
         //Generator.Models.Generator gen = new(Input, _structure, _buttons);
-        Generator.Models.Generator gen = new(Input, ref _is.GetStructure(), _is.DynamicButtons);
-        
-        ProgresBar = 0;
+        //Generator.Models.Generator gen = new(Input, _is.GetStructure(), _is.DynamicButtons);
 
-
-        await gen.FindStrings();
-        ProgresBar = 10;
-        await gen.FindSourcesAndVariables(Delimiter);
-        ProgresBar = 20;
-
-        if (gen.SourcesExists())
+        try
         {
-            await gen.JoinOn(CsvKey, LdapKey, progress);
-            ProgresBar = 60;
-            gen.PrepareVariable();
-            ProgresBar = 80;
+            Generator.Models.Generator gen = _is.GetGenerator();
+            gen.setValues(Input, _is.DynamicButtons);
 
-            //gen.JoinOn("osCislo", "uidNumber");
-            string output = gen.Generate();
-            ProgresBar = 95;
-            Output = output;
-            ProgresBar = 100;
+            ProgresBar = 0;
+
+
+            await gen.FindStrings();
+            ProgresBar = 10;
+            await gen.FindSourcesAndVariables(Delimiter);
+            ProgresBar = 20;
+
+            if (gen.SourcesExists())
+            {
+                await gen.JoinOn(CsvKey, LdapKey, progress);
+                ProgresBar = 60;
+                gen.PrepareVariable();
+                ProgresBar = 80;
+
+                //gen.JoinOn("osCislo", "uidNumber");
+                string output = gen.Generate();
+                ProgresBar = 95;
+                Output = output;
+                ProgresBar = 100;
+            }
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message);
         }
     }
 }

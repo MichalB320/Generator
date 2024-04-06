@@ -27,6 +27,9 @@
     <system:String x:Key="loggedIn">Logged In</system:String>
     <system:String x:Key="IncorrectCredentialsError">The user name or password is incorrect.</system:String>
     <system:String x:Key="ServerNotOperationalError">The server is not operational.</system:String>
+    
+    <!--sourcesManager-->
+    <system:String x:Key="fileException">The process cannot access the file because it is being used by another process.</system:String>
 
     <!--conditionView-->
     <system:String x:Key="condition">Condition: </system:String>
@@ -40,4 +43,9 @@
     <!--generateView-->
     <system:String x:Key="expression">Expression: </system:String>
     <system:String x:Key="characterEnter">Enter a character: </system:String>
+    <system:String x:Key="specialChar">Wrong count special char.</system:String>
+    <system:String x:Key="deliminerChar">Wrong deliminer used.</system:String>
+
+    <!--urlView-->
+    <system:String x:Key="emptyAlias">Empty Alias</system:String>
 </ResourceDictionary>

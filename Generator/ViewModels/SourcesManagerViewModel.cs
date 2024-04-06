@@ -1,10 +1,12 @@
-﻿using ClassLibrary;
+﻿//using ClassLibrary;
 using CommunityToolkit.Mvvm.Input;
 using Generator.Models;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.DirectoryServices;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -114,27 +116,33 @@ public class SourcesManagerViewModel : ViewModelBase
 
     private void OnClickCsvBtn()
     {
-        var ofd = new OpenFileDialog();
-        ofd.Filter = "CSV súbory (*.csv) | *.csv";
-        ofd.ShowDialog();
-
-        if (!ofd.FileName.Equals(""))
+        try
         {
-            var csvFileName = new FileInfo(ofd.FileName);
-            CSVData csvFile = new(csvFileName);
-            CSVData csv = new(csvFileName);
-            csvFile.Fill();
-            csv.Fill();
+            var ofd = new OpenFileDialog();
+            ofd.Filter = "CSV súbory (*.csv) | *.csv";
+            ofd.ShowDialog();
 
-            _is.AddCSV(csvFile);
-            Count++;
-            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(csvFileName.Name);
-            AddButtonToStack(fileNameWithoutExtension, typeof(CSVData));
-            //---------------
-            _mystructure.Add<CSVData>(csv);
+            if (!ofd.FileName.Equals(""))
+            {
+                var csvFileName = new FileInfo(ofd.FileName);
+                CSVData csvFile = new(csvFileName);
+                CSVData csv = new(csvFileName);
+                csvFile.Fill();
+                csv.Fill();
+
+                _is.AddCSV(csvFile);
+                Count++;
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(csvFileName.Name);
+                AddButtonToStack(fileNameWithoutExtension, typeof(CSVData));
+                //---------------
+                _mystructure.Add<CSVData>(csv);
+            }
+        }
+        catch (IOException e)
+        {
+            MessageBox.Show(Application.Current.FindResource("fileException") as string);
         }
     }
-
     private void OnClickEVBtn()
     {
         UrlViewModel urlVM = new();
@@ -143,20 +151,25 @@ public class SourcesManagerViewModel : ViewModelBase
         {
             DataContext = urlVM,
         };
-
+        urlVM.CloseWindowRequested += urlWin.CloseWindowHandler;
         urlWin.ShowDialog();
-
-        urlVM.GetCSVFormat();
-        //string vars = urlVM.WebData;
-        //string vars = urlVM.People.ToString();
-        //Output = vars;
-        CSVData csv = new(urlVM.csv);
-        _is.AddCSV(csv);
-        Count++;
         string name = urlVM.Alias;//"predmety";
-        AddButtonToStack(name, typeof(CSVData));
-        //------
-        _mystructure.Add<CSVData>(csv);
+        if (name.Equals(""))
+        {
+            MessageBox.Show(Application.Current.FindResource("emptyAlias") as string);
+        }
+        else
+        {
+            //urlVM.GetCSVFormat();
+            CSVData csv = new(urlVM.GetCSVFormat());
+
+            _is.AddCSV(csv);
+            Count++;
+
+            AddButtonToStack(name, typeof(CSVData));
+            //------
+            _mystructure.Add<CSVData>(csv);
+        }
     }
 
     private void OnClickLdapBtn()

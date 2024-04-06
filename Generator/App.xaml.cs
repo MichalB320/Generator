@@ -1,7 +1,6 @@
 ﻿using Generator.Models;
 using Generator.Stores;
 using Generator.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace Generator;

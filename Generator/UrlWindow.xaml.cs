@@ -11,5 +11,10 @@ namespace Generator
         {
             InitializeComponent();
         }
+
+        public void CloseWindowHandler()
+        {
+            Close();
+        }
     }
 }

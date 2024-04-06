@@ -20,10 +20,10 @@
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="Expression" Grid.Row="0" Grid.Column="0" Text="{DynamicResource condition}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <TextBox x:Name="txtBox" Grid.Row="0" Grid.Column="1" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="txtBox" Grid.Row="0" Grid.Column="1" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Height="18"/>
         
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Alias: " Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Alias}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Alias}" Height="18"/>
         <Button x:Name="btn" Grid.Row="1" Grid.Column="2" Content="{DynamicResource search}" Margin="5" Command="{Binding SearchCommand}" Height="20" Width="80"/>
 
         <Expander Grid.Row="2" Grid.Column="1" Header="{DynamicResource ldapManual}">

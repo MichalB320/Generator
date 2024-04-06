@@ -1,4 +1,4 @@
-﻿using ClassLibrary;
+﻿//using ClassLibrary;
 using Generator.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
@@ -20,7 +20,7 @@ public class IS
         _structure = new Mystructure();
         _login = new Login();
         _manager = new Manager(ref _structure);
-        _generator = new Generator("", ref _structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
+        _generator = new Generator("", _structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
 
         Info = "logged out";
         //DynamicButtons = _manager.DynamicButtons;

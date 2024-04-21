@@ -1,6 +1,7 @@
 ﻿//using ClassLibrary;
 using CommunityToolkit.Mvvm.Input;
-using Generator.Models;
+using Generator;
+using GeneratorApp.Models;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class SourcesManagerViewModel : ViewModelBase
 {
@@ -135,7 +136,7 @@ public class SourcesManagerViewModel : ViewModelBase
                 string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(csvFileName.Name);
                 AddButtonToStack(fileNameWithoutExtension, typeof(CSVData));
                 //---------------
-                _mystructure.Add<CSVData>(csv);
+                _mystructure.Add(csv);
             }
         }
         catch (IOException e)
@@ -168,7 +169,7 @@ public class SourcesManagerViewModel : ViewModelBase
 
             AddButtonToStack(name, typeof(CSVData));
             //------
-            _mystructure.Add<CSVData>(csv);
+            _mystructure.Add(csv);
         }
     }
 
@@ -192,7 +193,7 @@ public class SourcesManagerViewModel : ViewModelBase
                 if (!string.IsNullOrEmpty(filter) && result.Count > 0)
                 {
                     _is.AddSearchResulCollection(result);
-                    _mystructure.Add<SearchResultCollection>(result);
+                    _mystructure.Add(result);
                     Count++;
                     string name = conVM.Alias; //conVM.Filter;
                     AddButtonToStack(name, typeof(SearchResultCollection));

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Resources;
 
-namespace Generator.Language;
+namespace GeneratorApp.Language;
 
 internal class LangHelper
 {

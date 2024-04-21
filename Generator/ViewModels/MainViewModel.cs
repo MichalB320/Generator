@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Generator.Stores;
+using GeneratorApp.Stores;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {

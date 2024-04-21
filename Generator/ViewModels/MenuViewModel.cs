@@ -1,6 +1,4 @@
-﻿using Generator.ViewModels;
-
-namespace GeneratorApp.ViewModels;
+﻿namespace GeneratorApp.ViewModels;
 
 public class MenuViewModel : ViewModelBase
 {

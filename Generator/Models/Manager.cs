@@ -1,8 +1,7 @@
-﻿//using ClassLibrary;
-using System.DirectoryServices;
+﻿using System.DirectoryServices;
 using System.Text;
 
-namespace Generator.Models;
+namespace GeneratorApp.Models;
 
 public class Manager
 {
@@ -77,12 +76,12 @@ public class Manager
 
     public void AddCSV(CSVData csvData)
     {
-        _struct.Add<CSVData>(csvData);
+        _struct.Add(csvData);
     }
 
     public void AddSearchResultCollection(SearchResultCollection ldapData)
     {
-        _struct.Add<SearchResultCollection>(ldapData);
+        _struct.Add(ldapData);
     }
 
     public void Clear() => _struct.Clear();

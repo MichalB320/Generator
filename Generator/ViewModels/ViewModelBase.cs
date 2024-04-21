@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {

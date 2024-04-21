@@ -1,11 +1,8 @@
-﻿//using ClassLibrary;
-//using System.DirectoryServices.Protocols;
+﻿using System.DirectoryServices;
 
-using System.DirectoryServices;
+namespace GeneratorApp.Models;
 
-namespace Generator.Models;
-
-public class Mystructure //TODO: T nad triedou
+public class Mystructure 
 {
     private readonly List<object> _list;
     public int Count { get => _list.Count; }
@@ -40,15 +37,15 @@ public class Mystructure //TODO: T nad triedou
 
     public Type GetTypeOf(int index)
     {
-        if (_list[index].GetType() == typeof(CSVData))
-        {
-            return typeof(CSVData);
-        }
-        else
-        {
-            return typeof(SearchResultCollection);
-        }
-
+        //if (_list[index].GetType() == typeof(CSVData))
+        //{
+        //    return typeof(CSVData);
+        //}
+        //else
+        //{
+        //    return typeof(SearchResultCollection);
+        //}
+        return _list[index].GetType();
     }
 
     public void Add<T>(T item) => _list.Add(item);

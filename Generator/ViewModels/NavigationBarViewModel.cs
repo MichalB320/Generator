@@ -1,11 +1,11 @@
 ﻿//using ClassLibrary;
 using CommunityToolkit.Mvvm.Input;
-using Generator.Models;
-using Generator.Stores;
+using GeneratorApp.Models;
+using GeneratorApp.Stores;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class NavigationBarViewModel : ViewModelBase
 {

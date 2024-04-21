@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Generator.Models;
+using GeneratorApp.Models;
 using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class LoginViewModel : ViewModelBase
 {

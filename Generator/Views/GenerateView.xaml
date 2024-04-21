@@ -4,7 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Generator.Views" 
-             xmlns:components="clr-namespace:Generator.Components" xmlns:components1="clr-namespace:GeneratorApp.Components" xmlns:viewmodels="clr-namespace:Generator.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:SourcesManagerViewModel}"
+             xmlns:components="clr-namespace:Generator.Components" 
+             xmlns:components1="clr-namespace:GeneratorApp.Components" 
+             xmlns:viewmodels="clr-namespace:GeneratorApp.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:SourcesManagerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -25,15 +28,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!--<GroupBox Header="KEY" Grid.Row="0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="CSV: " Margin="10,5,5,5"/>
-                    <TextBox Text="{Binding CsvKey, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="0,5,10,5"/>
-                    <TextBlock Text="LDAP: " Margin="10,5,5,5"/>
-                    <TextBox Text="{Binding LdapKey, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="0,5,10,5"/>
-                </StackPanel>
-            </GroupBox>-->
-
             <GroupBox Grid.Row="1" Header="WRITE">
                 <Grid Margin="-1,0,1,0">
                     <Grid.RowDefinitions>
@@ -48,15 +42,15 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Name="multi" Text="{DynamicResource expression}" Height="33" VerticalAlignment="Top" />
+                        <TextBlock Grid.Column="0" Name="multi" Text="{DynamicResource expression}" Height="33" VerticalAlignment="Top" Margin="0,0,5,0"/>
                         <TextBox Name="expressionTextBox" Grid.Column="1" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Input}"/>
                     </Grid>
 
                     <StackPanel Grid.Row="1">
-                        <Button Content="GENERATE" Command="{Binding GenerateComman}"/>
+                        <Button Content="GENERATE" Command="{Binding GenerateComman}" Margin="10"/>
                     </StackPanel>
 
-                    <ProgressBar Grid.Row="2" Value="{Binding ProgresBar}" Height="10"/>
+                    <!--<ProgressBar Grid.Row="2" Value="{Binding ProgresBar}" Height="10"/>-->
                 </Grid>
             </GroupBox>
 

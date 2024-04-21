@@ -1,9 +1,8 @@
-﻿//using ClassLibrary;
-using Generator.ViewModels;
+﻿using GeneratorApp.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 
-namespace Generator.Models;
+namespace GeneratorApp.Models;
 
 public class IS
 {
@@ -20,7 +19,7 @@ public class IS
         _structure = new Mystructure();
         _login = new Login();
         _manager = new Manager(ref _structure);
-        _generator = new Generator("", _structure, new System.Collections.ObjectModel.ObservableCollection<ViewModels.ButtonViewModel>());
+        _generator = new Generator("", _structure, new ObservableCollection<ButtonViewModel>());
 
         Info = "logged out";
         //DynamicButtons = _manager.DynamicButtons;
@@ -38,6 +37,8 @@ public class IS
     {
         _manager.Clear();
     }
+
+    public bool IsEmpty() => _structure.Count == 0 ? true : false;
 
     public void AddCSV(CSVData csvData) => _manager.AddCSV(csvData);
 

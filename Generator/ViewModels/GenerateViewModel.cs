@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Generator.Models;
 using GeneratorApp;
+using GeneratorApp.Models;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class GenerateViewModel : ViewModelBase
 {
@@ -129,37 +129,38 @@ public class GenerateViewModel : ViewModelBase
 
         //Generator.Models.Generator gen = new(Input, _structure, _buttons);
         //Generator.Models.Generator gen = new(Input, _is.GetStructure(), _is.DynamicButtons);
-
-        try
+        if (!_is.IsEmpty())
         {
-            Generator.Models.Generator gen = _is.GetGenerator();
-            gen.setValues(Input, _is.DynamicButtons);
-
-            ProgresBar = 0;
-
-
-            await gen.FindStrings(SpeciaChar);
-            ProgresBar = 10;
-            await gen.FindSourcesAndVariables(Delimiter);
-            ProgresBar = 20;
-
-            if (gen.SourcesExists())
+            try
             {
-                await gen.JoinOn(CsvKey, LdapKey, progress);
-                ProgresBar = 60;
-                gen.PrepareVariable();
-                ProgresBar = 80;
+                Models.Generator gen = _is.GetGenerator();
+                gen.setValues(Input, _is.DynamicButtons);
 
-                //gen.JoinOn("osCislo", "uidNumber");
-                string output = gen.Generate(SpeciaChar);
-                ProgresBar = 95;
-                Output = output;
-                ProgresBar = 100;
+                ProgresBar = 0;
+
+
+                await gen.FindStrings(SpeciaChar);
+                ProgresBar = 10;
+                await gen.FindSourcesAndVariables(Delimiter);
+                ProgresBar = 20;
+
+                if (gen.SourcesExists())
+                {
+                    await gen.JoinOn(CsvKey, LdapKey, progress);
+                    ProgresBar = 60;
+                    gen.PrepareVariable();
+                    ProgresBar = 80;
+
+                    string output = gen.Generate(SpeciaChar);
+                    ProgresBar = 95;
+                    Output = output;
+                    ProgresBar = 100;
+                }
             }
-        }
-        catch (Exception e)
-        {
-            MessageBox.Show(e.Message);
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }

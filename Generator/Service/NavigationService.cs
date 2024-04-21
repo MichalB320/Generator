@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Generator.Stores;
+using GeneratorApp.Stores;
 
-namespace Generator.Service;
+namespace GeneratorApp.Service;
 
 public class NavigationService<TViewModel> where TViewModel : ObservableObject
 {

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Generator.Stores;
+namespace GeneratorApp.Stores;
 
 public class NavigationStore
 {

@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Generator.Models;
+using GeneratorApp.Models;
 using HtmlAgilityPack;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class UrlViewModel : ViewModelBase
 {

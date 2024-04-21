@@ -1,10 +1,10 @@
-﻿using Generator.ViewModels;
+﻿using GeneratorApp.ViewModels;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Text;
 using System.Windows;
 
-namespace Generator.Models;
+namespace GeneratorApp.Models;
 
 public class Generator
 {
@@ -219,7 +219,7 @@ public class Generator
 
                     if (properties.Contains(propName))
                     {
-                        v1 = (string)resultEntry.InvokeGet(propName).ToString();
+                        v1 = resultEntry.InvokeGet(propName).ToString();
                     }
                     else
                     {
@@ -432,6 +432,11 @@ public class Generator
     {
         return true;
     }
+
+    public List<string> Get_strings() => _strings;
+    public List<string> Get_sources() => _sources;
+    public List<string> Get_variables() => _variables;
+    public List<CSVData> Get_csv() => _csvS;
 
     internal void CheckVariables()
     {

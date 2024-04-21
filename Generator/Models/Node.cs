@@ -1,4 +1,4 @@
-﻿namespace Generator.Models;
+﻿namespace GeneratorApp.Models;
 
 public class Node
 {

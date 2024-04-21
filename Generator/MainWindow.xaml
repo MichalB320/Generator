@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Generator" 
         xmlns:views="clr-namespace:Generator.Views"
-        xmlns:language="clr-namespace:Generator.Language"
-        xmlns:vms="clr-namespace:Generator.ViewModels"
+        xmlns:language="clr-namespace:GeneratorApp.Language"
+        xmlns:vms="clr-namespace:GeneratorApp.ViewModels"
         xmlns:components="clr-namespace:Generator.Components"
         mc:Ignorable="d"
         Title="Generator" Height="450" Width="800">

@@ -1,6 +1,6 @@
-﻿using Generator.Models;
-using Generator.Stores;
-using Generator.ViewModels;
+﻿using GeneratorApp.Models;
+using GeneratorApp.Stores;
+using GeneratorApp.ViewModels;
 using System.Windows;
 
 namespace Generator;

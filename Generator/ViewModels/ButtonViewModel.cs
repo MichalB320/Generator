@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class ButtonViewModel
 {

@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Generator.Models;
+using GeneratorApp.Models;
 using System.DirectoryServices;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Generator.ViewModels;
+namespace GeneratorApp.ViewModels;
 
 public class ConditionViewModel : ViewModelBase
 {

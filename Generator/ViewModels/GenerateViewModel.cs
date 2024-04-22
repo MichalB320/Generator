@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using GeneratorApp;
 using GeneratorApp.Models;
 using Microsoft.Win32;
 using System.IO;
@@ -144,18 +143,17 @@ public class GenerateViewModel : ViewModelBase
                 await gen.FindSourcesAndVariables(Delimiter);
                 ProgresBar = 20;
 
-                if (gen.SourcesExists())
-                {
-                    await gen.JoinOn(CsvKey, LdapKey, progress);
-                    ProgresBar = 60;
-                    gen.PrepareVariable();
-                    ProgresBar = 80;
+                gen.SourcesExists();
 
-                    string output = gen.Generate(SpeciaChar);
-                    ProgresBar = 95;
-                    Output = output;
-                    ProgresBar = 100;
-                }
+                await gen.JoinOn(CsvKey, LdapKey, progress);
+                ProgresBar = 60;
+                gen.PrepareVariable();
+                ProgresBar = 80;
+
+                string output = gen.Generate(SpeciaChar);
+                ProgresBar = 95;
+                Output = output;
+                ProgresBar = 100;
             }
             catch (Exception e)
             {

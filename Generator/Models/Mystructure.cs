@@ -1,8 +1,6 @@
-﻿using System.DirectoryServices;
+﻿namespace GeneratorApp.Models;
 
-namespace GeneratorApp.Models;
-
-public class Mystructure 
+public class Mystructure
 {
     private readonly List<object> _list;
     public int Count { get => _list.Count; }

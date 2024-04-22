@@ -428,9 +428,15 @@ public class Generator
         return Array.IndexOf(jednoPole, prvek) != -1;
     }
 
-    internal bool SourcesExists()
+    internal void SourcesExists()
     {
-        return true;
+        List<string> contents = _buttons.Select(btnVM => btnVM.Content).ToList();
+
+        foreach (string source in _sources)
+        {
+            if (!contents.Contains(source))
+                throw new Exception($"zdroj: {source} neexistuje.");
+        }
     }
 
     public List<string> Get_strings() => _strings;

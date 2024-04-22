@@ -37,5 +37,5 @@ public class GeneratorTest
         Assert.Equal(4, generator.Get_variables().Count);
     }
 
-    
+
 }

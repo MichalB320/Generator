@@ -132,6 +132,7 @@ public class GenerateViewModel : ViewModelBase
         {
             try
             {
+                Output = "----------GENERUJEM----------";
                 Models.Generator gen = _is.GetGenerator();
                 gen.setValues(Input, _is.DynamicButtons);
 
@@ -144,10 +145,12 @@ public class GenerateViewModel : ViewModelBase
                 ProgresBar = 20;
 
                 gen.SourcesExists();
+                
 
                 await gen.JoinOn(CsvKey, LdapKey, progress);
                 ProgresBar = 60;
                 gen.PrepareVariable();
+
                 ProgresBar = 80;
 
                 string output = gen.Generate(SpeciaChar);
@@ -158,6 +161,7 @@ public class GenerateViewModel : ViewModelBase
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                Output = string.Empty;
             }
         }
     }

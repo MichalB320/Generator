@@ -87,8 +87,7 @@ public class Generator
 
     public void PrepareVariable()
     {
-        try
-        {
+
             Mystructure stlpce = new();
 
             _pole = new string[][]
@@ -137,12 +136,9 @@ public class Generator
 
             _stlpce = stlpce;
 
+            CheckVariables();
             Join();
-        }
-        catch (Exception e)
-        {
-            MessageBox.Show(e.Message);
-        }
+
     }
 
     public async Task FindStrings(char specialChar)
@@ -446,7 +442,16 @@ public class Generator
 
     internal void CheckVariables()
     {
+        int indexSource = 0;
+        foreach (string source in _sources)
+        {
+            string variable = _variables[indexSource];
 
+            if (_stlpce.GetTypeOf(indexSource) == typeof(CSVData) && !_stlpce.GetItem<CSVData>(indexSource).GetRow(0).Contains(variable))
+                throw new Exception($"premenna {variable} neexistuje");
+
+            indexSource++;
+        }
     }
 
     internal void Save()

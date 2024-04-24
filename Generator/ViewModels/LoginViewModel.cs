@@ -22,7 +22,7 @@ public class LoginViewModel : ViewModelBase
     {
         _is = iss;
         Domain = "LDAP://pegasus.fri.uniza.sk";
-        UserInput = "bezo1";
+        UserInput = "";
         NavigationBarViewModel = navigationBarViewModel;
         ConnectCommand = new RelayCommand(Connect);
 
